@@ -1,15 +1,26 @@
-// Rutina basada en rutinagym.pdf ("Físico marcado"), reorganizada con máquinas del gimnasio.
+// Rutina basada en rutinagym.pdf ("Físico marcado"), adaptada al equipo del gimnasio:
+// multiestación de poleas (jalón, remo bajo, polea ajustable), barras, bancos inclinados y máquinas de pierna.
 // sets: número de series; reps: [mín, máx]; unit: 'reps' | 's' (segundos);
-// load (en EXERCISES): 'asist' = kg de asistencia, 'none' = sin peso; por defecto kg.
+// load (en EXERCISES): 'none' = sin peso; por defecto kg.
+// ill (en EXERCISES): reutiliza la ilustración de otro ejercicio.
 // cue: técnica corta (en el ítem, la propia de ese día; si no hay, la del ejercicio).
 // how: descripción en tres pasos [posición, movimiento, error que evitar].
 // rest: texto de descanso; restSec: segundos que corre el temporizador.
 // extra: true → suma 1 serie cuando "Volumen extra" está activo (semana 5+).
 
 const EXERCISES = {
-  // ---- pecho y tríceps
+  // ---- pecho
+  press_inclinado_barra: {
+    name: 'Press inclinado con barra', alt: 'banco a 30°, o en multipower', muscle: 'Pecho superior',
+    cue: 'Baja la barra a la parte alta del pecho, con control.',
+    how: [
+      'Banco a unos 30°, ojos bajo la barra, agarre un poco más ancho que los hombros y omóplatos juntos.',
+      'Baja la barra hasta rozar la parte alta del pecho y empuja hacia arriba hasta casi estirar los brazos.',
+      'Rebotar la barra en el pecho o despegar la cadera del banco. Usa los seguros del rack.',
+    ],
+  },
   press_inclinado: {
-    name: 'Press inclinado con mancuernas', alt: 'o press en suelo', muscle: 'Pecho superior',
+    name: 'Press inclinado con mancuernas', muscle: 'Pecho superior',
     cue: 'Si hay banco, inclinación de 20–35°. Baja con control.',
     how: [
       'Recuéstate en el banco inclinado con una mancuerna en cada mano a la altura del pecho, pies firmes en el suelo.',
@@ -26,30 +37,137 @@ const EXERCISES = {
       'Despegar los hombros del respaldo o encogerlos hacia las orejas.',
     ],
   },
+  apertura_baja: {
+    name: 'Apertura en polea baja', alt: 'de abajo hacia arriba', muscle: 'Pecho superior',
+    cue: 'Sube en arco hasta la altura del pecho; codos fijos.',
+    how: [
+      'Polea en la posición más baja con agarre de mano. Con dos poleas, una en cada mano; con una, un brazo a la vez.',
+      'Con el codo un poco flexionado, sube la mano en arco hacia el centro hasta la altura de la clavícula; baja despacio.',
+      'Doblar y estirar el codo: se vuelve un press y deja de trabajar el pecho.',
+    ],
+  },
   cruce_poleas: {
-    name: 'Cruce de poleas', muscle: 'Pecho',
+    name: 'Apertura en polea media', alt: 'cruce de poleas', muscle: 'Pecho',
     cue: 'Codos fijos y algo flexionados; junta las manos frente al pecho.',
     how: [
-      'Poleas arriba, un agarre en cada mano y un paso al frente con el torso un poco inclinado.',
-      'Lleva las manos en arco hacia el centro hasta juntarlas frente al pecho; pausa y abre despacio.',
-      'Doblar y estirar los codos: se vuelve un press. El ángulo del codo no cambia.',
+      'Polea a la altura del pecho con agarre de mano. Con dos poleas, una en cada mano; con una, un brazo a la vez.',
+      'Lleva la mano en arco hacia el centro hasta quedar frente al pecho; pausa y abre despacio hasta sentir el estiramiento.',
+      'Doblar y estirar los codos: el ángulo del codo no cambia.',
     ],
   },
-  fondos: {
-    load: 'asist', name: 'Fondos asistidos', muscle: 'Tríceps · pecho',
-    cue: 'Usa un rango cómodo; omite si molesta el hombro.',
+
+  // ---- espalda
+  jalon: {
+    name: 'Jalón al pecho', alt: 'barra larga, agarre ancho', muscle: 'Dorsal ancho',
+    cue: 'Lleva la barra al pecho; nunca detrás del cuello.',
     how: [
-      'Arrodíllate en la plataforma de asistencia y toma las barras paralelas con los brazos estirados.',
-      'Baja doblando los codos hasta que los brazos queden paralelos al suelo y empuja de vuelta arriba.',
-      'Bajar de más si molesta el hombro. Más peso de asistencia = más fácil.',
+      'Siéntate en la estación de jalón con los muslos bajo los rodillos; toma la barra larga un poco más ancho que los hombros.',
+      'Jala la barra hacia la parte alta del pecho llevando los codos hacia abajo; sube controlando hasta estirar los brazos.',
+      'Echarte muy atrás o jalar con los brazos en lugar de con la espalda.',
     ],
   },
+  jalon_cerrado: {
+    ill: 'jalon',
+    name: 'Jalón agarre cerrado', alt: 'agarre en V o palmas enfrentadas', muscle: 'Dorsal ancho',
+    cue: 'Codos pegados al cuerpo; estira arriba por completo.',
+    how: [
+      'En la estación de jalón cambia la barra por el agarre en V (o toma la barra con las manos juntas).',
+      'Jala hacia el pecho llevando los codos hacia las costillas; sube despacio hasta sentir el estiramiento del dorsal.',
+      'Subir a medias: el estiramiento de arriba es parte del ejercicio.',
+    ],
+  },
+  remo_barra: {
+    name: 'Remo con barra', muscle: 'Espalda media · dorsal',
+    cue: 'Torso inclinado y quieto; lleva la barra al ombligo.',
+    how: [
+      'De pie con la barra, rodillas algo flexionadas y la cadera atrás hasta dejar el torso a unos 45°, espalda recta.',
+      'Jala la barra hacia el ombligo llevando los codos atrás; baja hasta estirar los brazos sin mover el torso.',
+      'Enderezarte para subir el peso o redondear la espalda.',
+    ],
+  },
+  remo_sentado: {
+    name: 'Remo sentado en polea baja', alt: 'agarre en V', muscle: 'Espalda media',
+    cue: 'No balancees el torso; guía el movimiento con los codos.',
+    how: [
+      'En la estación de remo bajo, pies en el apoyo, rodillas un poco flexionadas y espalda recta.',
+      'Jala el agarre hacia el abdomen llevando los codos atrás y juntando los omóplatos; regresa estirando los brazos.',
+      'Mecer el torso hacia adelante y atrás para mover el peso.',
+    ],
+  },
+  remo_polea_una: {
+    ill: 'remo_sentado',
+    name: 'Remo a una mano en polea baja', muscle: 'Dorsal ancho',
+    cue: 'Lleva el codo hacia la cadera; estira por completo al regresar.',
+    how: [
+      'En la estación de remo bajo con agarre de una mano; siéntate derecho con el otro brazo apoyado en el muslo.',
+      'Jala llevando el codo hacia la cadera y regresa dejando que el hombro se estire hacia el frente.',
+      'Girar el torso para mover más peso.',
+    ],
+  },
+  pullover_polea: {
+    name: 'Pullover en polea alta', alt: 'brazos rectos, barra o cuerda', muscle: 'Dorsal ancho',
+    cue: 'Brazos casi rectos; el movimiento sale del hombro.',
+    how: [
+      'De frente a la polea alta (estación de jalón o polea ajustable arriba), un paso atrás y el torso algo inclinado.',
+      'Con los brazos casi rectos, baja el agarre en arco hasta los muslos; sube despacio hasta la altura de la cabeza.',
+      'Doblar los codos: se convierte en extensión de tríceps.',
+    ],
+  },
+  face_pull: {
+    name: 'Face pull en polea media', alt: 'con cuerda', muscle: 'Deltoide posterior',
+    cue: 'Polea a la altura de la cara; pausa de un segundo.',
+    how: [
+      'Polea ajustable a la altura de la cara con cuerda; toma un extremo en cada mano y da un paso atrás.',
+      'Jala la cuerda hacia la frente abriendo los codos hacia los lados y arriba; pausa y regresa.',
+      'Jalar hacia el pecho o echarte hacia atrás.',
+    ],
+  },
+
+  // ---- hombros
+  press_hombro: {
+    name: 'Press de hombro sentado', alt: 'en máquina o con mancuernas', muscle: 'Deltoides',
+    cue: 'Solo si no causa dolor; no fuerces el rango.',
+    how: [
+      'Sentado con la espalda apoyada; agarres o mancuernas a la altura de los hombros.',
+      'Empuja hacia arriba sin bloquear los codos y baja hasta que las manos queden a la altura de las orejas.',
+      'Arquear la espalda baja para empujar más peso.',
+    ],
+  },
+  elev_laterales: {
+    name: 'Elevaciones laterales', alt: 'con mancuernas', muscle: 'Deltoide lateral',
+    cue: 'Codos algo flexionados; evita balancearte.',
+    how: [
+      'De pie, mancuernas a los costados y los codos un poco flexionados.',
+      'Sube los brazos hacia los lados hasta la altura de los hombros y baja despacio.',
+      'Subir de más o con impulso; el trapecio no debe hacer el trabajo.',
+    ],
+  },
+  lat_polea: {
+    name: 'Elevación lateral en polea baja', alt: 'un brazo a la vez', muscle: 'Deltoide lateral',
+    cue: 'Empieza con la mano cruzada frente a la cadera; sube hasta el hombro.',
+    how: [
+      'Polea ajustable abajo, agarre de mano. Párate de lado y toma el agarre con la mano lejana, cruzando frente al cuerpo.',
+      'Sube el brazo hacia el costado hasta la altura del hombro, codo un poco flexionado; baja controlado hasta cruzar otra vez.',
+      'Subir con impulso del cuerpo o encoger el trapecio.',
+    ],
+  },
+  pajaro_polea: {
+    name: 'Pájaro en polea media', alt: 'cruzado, o un brazo a la vez', muscle: 'Deltoide posterior',
+    cue: 'Brazos casi rectos; abre hacia atrás sin encoger los hombros.',
+    how: [
+      'Polea a la altura del hombro con agarre de mano (o solo el cable). Con dos poleas, toma cada cable con la mano contraria.',
+      'Abre los brazos hacia los lados y atrás hasta quedar en línea con los hombros; regresa despacio cruzando frente al pecho.',
+      'Jalar con los codos doblados o echar el torso hacia atrás.',
+    ],
+  },
+
+  // ---- brazos
   ext_triceps: {
-    name: 'Extensión de tríceps en polea', muscle: 'Tríceps',
+    name: 'Tríceps con cuerda en polea alta', muscle: 'Tríceps',
     cue: 'Codos pegados al torso.',
     how: [
-      'De frente a la polea alta con barra o cuerda, codos pegados a los costados.',
-      'Empuja hacia abajo hasta estirar los brazos por completo y sube solo hasta que el antebrazo quede horizontal.',
+      'De frente a la polea alta con cuerda, codos pegados a los costados.',
+      'Empuja hacia abajo hasta estirar los brazos y separa un poco la cuerda al final; sube hasta que el antebrazo quede horizontal.',
       'Que los codos se muevan hacia adelante o inclinarte para usar el peso del cuerpo.',
     ],
   },
@@ -62,130 +180,54 @@ const EXERCISES = {
       'Abrir los codos hacia los lados o arquear la espalda baja.',
     ],
   },
-
-  // ---- espalda y bíceps
-  // dominadas asistidas y face pull no vienen en el PDF: son ajustes acordados
-  dominadas: {
-    load: 'asist', name: 'Dominadas asistidas', muscle: 'Dorsal ancho',
-    cue: 'Lleva el pecho hacia la barra. Cuando hagas 10 limpias, quita asistencia.',
+  press_frances: {
+    name: 'Press francés con barra', alt: 'barra Z si hay', muscle: 'Tríceps',
+    cue: 'Solo se mueven los codos; baja la barra detrás de la frente.',
     how: [
-      'Arrodíllate en la plataforma y toma la barra con agarre algo más ancho que los hombros, palmas al frente.',
-      'Jala llevando los codos hacia abajo y atrás hasta que la barbilla pase la barra; baja hasta estirar los brazos.',
-      'Columpiarte o subir a medias. Más peso de asistencia = más fácil.',
+      'Acostado en banco plano, barra arriba con los brazos estirados y un poco inclinados hacia la cabeza.',
+      'Dobla los codos y baja la barra hacia atrás de la frente; estira de vuelta sin mover los hombros.',
+      'Abrir los codos hacia los lados o bajar la barra a la cara.',
     ],
   },
-  jalon: {
-    name: 'Jalón al pecho', muscle: 'Dorsal ancho',
-    cue: 'Lleva la barra al pecho; nunca detrás del cuello.',
-    how: [
-      'Siéntate con los muslos bajo los rodillos y toma la barra un poco más ancho que los hombros.',
-      'Jala la barra hacia la parte alta del pecho llevando los codos hacia abajo; sube controlando.',
-      'Echarte muy atrás o jalar con los brazos en lugar de con la espalda.',
-    ],
-  },
-  remo_sentado: {
-    name: 'Remo sentado en polea', alt: 'o máquina', muscle: 'Espalda media',
-    cue: 'No balancees el torso; guía el movimiento con los codos.',
-    how: [
-      'Siéntate con los pies en la plataforma, rodillas un poco flexionadas y espalda recta.',
-      'Jala el agarre hacia el abdomen llevando los codos atrás y juntando los omóplatos; regresa estirando los brazos.',
-      'Mecer el torso hacia adelante y atrás para mover el peso.',
-    ],
-  },
-  remo_mancuerna: {
-    name: 'Remo a una mano con mancuerna', muscle: 'Dorsal ancho',
-    cue: 'Mantén el tronco estable; apóyate si hay banco.',
-    how: [
-      'Apoya una rodilla y una mano en el banco, espalda plana y la mancuerna colgando del otro brazo.',
-      'Lleva el codo hacia la cadera hasta que la mancuerna llegue al costado; baja estirando el brazo.',
-      'Girar el torso para subir más peso.',
-    ],
-  },
-  pullover_polea: {
-    name: 'Pullover en polea', muscle: 'Dorsal ancho',
-    cue: 'Brazos casi rectos; el movimiento sale del hombro.',
-    how: [
-      'De frente a la polea alta con barra o cuerda, un paso atrás y el torso algo inclinado.',
-      'Con los brazos casi rectos, baja el agarre en arco hasta los muslos; sube despacio hasta la altura de la cabeza.',
-      'Doblar los codos: se convierte en extensión de tríceps.',
-    ],
-  },
-  curl: {
-    name: 'Curl de bíceps con mancuernas', muscle: 'Bíceps',
+  curl_barra: {
+    name: 'Curl con barra', muscle: 'Bíceps',
     cue: 'Codos quietos; baja lentamente.',
     how: [
-      'De pie, una mancuerna en cada mano con las palmas al frente y los codos pegados al cuerpo.',
-      'Sube doblando solo el codo hasta que la mancuerna llegue al hombro; baja en 2–3 segundos.',
-      'Balancear el cuerpo o adelantar los codos.',
+      'De pie, barra con agarre al ancho de los hombros y palmas al frente, codos pegados al cuerpo.',
+      'Sube doblando solo los codos hasta la altura del pecho; baja en 2–3 segundos hasta estirar.',
+      'Balancear la cadera o adelantar los codos.',
     ],
   },
-  curl_martillo: {
-    name: 'Curl martillo', muscle: 'Bíceps · antebrazo',
+  curl_cuerda: {
+    ill: 'curl_polea',
+    name: 'Curl martillo con cuerda', alt: 'polea baja', muscle: 'Bíceps · antebrazo',
     cue: 'Muñecas neutras y movimiento controlado.',
     how: [
-      'De pie, mancuernas a los costados con las palmas mirando hacia el cuerpo.',
-      'Sube sin girar la muñeca, como si martillaras, y baja despacio.',
+      'De frente a la polea baja con cuerda, palmas enfrentadas y codos pegados.',
+      'Sube sin girar las muñecas hasta el pecho y baja despacio.',
       'Usar impulso o despegar los codos del cuerpo.',
     ],
   },
   curl_polea: {
-    name: 'Curl en polea', muscle: 'Bíceps',
+    name: 'Curl en polea baja', alt: 'barra recta', muscle: 'Bíceps',
     cue: 'Codos quietos; aprieta arriba un segundo.',
     how: [
-      'De frente a la polea baja con barra o cuerda, codos pegados a los costados.',
+      'De frente a la polea baja (estación de remo o polea ajustable abajo) con barra corta, codos pegados.',
       'Sube doblando solo el codo hasta el pecho; baja controlado hasta estirar el brazo.',
       'Inclinarte hacia atrás para subir más peso.',
     ],
   },
-
-  // ---- hombros
-  elev_laterales: {
-    name: 'Elevaciones laterales', alt: 'con mancuernas', muscle: 'Deltoide lateral',
-    cue: 'Codos algo flexionados; evita balancearte.',
+  curl_inclinado: {
+    name: 'Curl inclinado con mancuernas', muscle: 'Bíceps',
+    cue: 'Baja lentamente para controlar la repetición.',
     how: [
-      'De pie, mancuernas a los costados y los codos un poco flexionados.',
-      'Sube los brazos hacia los lados hasta la altura de los hombros y baja despacio.',
-      'Subir de más o con impulso; el trapecio no debe hacer el trabajo.',
-    ],
-  },
-  lat_polea: {
-    name: 'Elevaciones laterales en polea', muscle: 'Deltoide lateral',
-    cue: 'Sube hasta la altura del hombro y baja lento.',
-    how: [
-      'De lado a la polea baja; toma el agarre con la mano lejana, cruzando frente al cuerpo.',
-      'Sube el brazo hacia el costado hasta la altura del hombro, codo un poco flexionado; baja controlado.',
-      'Subir con impulso del cuerpo o encoger el trapecio.',
-    ],
-  },
-  press_hombro: {
-    name: 'Press de hombro en máquina', alt: 'o con mancuernas', muscle: 'Deltoides',
-    cue: 'Solo si no causa dolor; no fuerces el rango.',
-    how: [
-      'Ajusta el asiento para que los agarres queden a la altura de los hombros; espalda pegada al respaldo.',
-      'Empuja hacia arriba sin bloquear los codos y baja hasta que las manos queden a la altura de las orejas.',
-      'Arquear la espalda baja para empujar más peso.',
-    ],
-  },
-  pec_deck_inv: {
-    name: 'Pec deck inverso', alt: 'aperturas posteriores en máquina', muscle: 'Deltoide posterior',
-    cue: 'Brazos casi rectos; abre sin encoger los hombros.',
-    how: [
-      'Siéntate de frente a la máquina con el pecho apoyado en el respaldo y los agarres al frente a la altura del hombro.',
-      'Abre los brazos hacia atrás en arco hasta que queden en línea con los hombros; regresa despacio.',
-      'Jalar con los codos doblados o encoger los hombros.',
-    ],
-  },
-  face_pull: {
-    name: 'Face pull en polea', muscle: 'Deltoide posterior',
-    cue: 'Polea a la altura de la cara; pausa de un segundo.',
-    how: [
-      'Polea a la altura de la cara con cuerda; toma un extremo en cada mano y da un paso atrás.',
-      'Jala la cuerda hacia la frente abriendo los codos hacia los lados y arriba; pausa y regresa.',
-      'Jalar hacia el pecho o echarte hacia atrás.',
+      'Banco a unos 45°, espalda apoyada y los brazos colgando detrás de la línea del cuerpo.',
+      'Sube las mancuernas sin adelantar los codos y baja hasta estirar por completo.',
+      'Despegar la espalda del banco o recortar la bajada.',
     ],
   },
 
-  // ---- pierna (máquinas)
+  // ---- pierna
   prensa: {
     name: 'Prensa de pierna', muscle: 'Cuádriceps · glúteo',
     cue: 'Baja hasta 90° de rodilla sin despegar la cadera.',
@@ -193,6 +235,15 @@ const EXERCISES = {
       'Espalda y cadera pegadas al respaldo, pies en la plataforma al ancho de los hombros.',
       'Quita los seguros, baja la plataforma doblando las rodillas hasta unos 90° y empuja con todo el pie.',
       'Bloquear las rodillas arriba o que la cadera se despegue del asiento abajo.',
+    ],
+  },
+  rdl_barra: {
+    name: 'Peso muerto rumano con barra', muscle: 'Isquios · glúteo',
+    cue: 'Lleva la cadera atrás y mantén la espalda neutra.',
+    how: [
+      'De pie con la barra frente a los muslos, pies al ancho de la cadera y rodillas un poco flexionadas.',
+      'Lleva la cadera hacia atrás bajando la barra pegada a las piernas hasta media espinilla; sube apretando el glúteo.',
+      'Redondear la espalda o bajar doblando las rodillas como sentadilla.',
     ],
   },
   ext_cuadriceps: {
@@ -225,7 +276,7 @@ const EXERCISES = {
 
   // ---- abdomen
   crunch_polea: {
-    name: 'Crunch en polea', muscle: 'Abdomen',
+    name: 'Crunch en polea alta', alt: 'con cuerda', muscle: 'Abdomen',
     cue: 'Flexiona el tronco; no tires del cuello.',
     how: [
       'De rodillas frente a la polea alta, cuerda a los lados de la cabeza.',
@@ -234,15 +285,21 @@ const EXERCISES = {
     ],
   },
   elev_piernas: {
-    load: 'none', name: 'Elevación de rodillas colgado', alt: 'o en silla romana', muscle: 'Abdomen bajo',
+    load: 'none', name: 'Elevación de rodillas', alt: 'colgado o en paralelas', muscle: 'Abdomen bajo',
     cue: 'Evita balancearte; elige la variante controlable.',
     how: [
-      'Cuélgate de la barra (o apoya los antebrazos en la silla romana) con el cuerpo quieto.',
+      'Cuélgate de una barra o apóyate en las paralelas con los brazos estirados, cuerpo quieto.',
       'Sube las rodillas hacia el pecho enrollando la pelvis y baja despacio.',
       'Columpiarte para subir las piernas.',
     ],
   },
 
+  // ---- cardio
+  escaladora: {
+    name: 'Escaladora', muscle: 'Cardio',
+    cue: 'Ritmo moderado: debes poder hablar en frases cortas. Sin colgarte de los barandales.',
+    how: [],
+  },
   bici: {
     name: 'Bicicleta', muscle: 'Cardio',
     cue: 'Debes poder hablar en frases cortas.',
@@ -252,72 +309,76 @@ const EXERCISES = {
 
 const DAYS = [
   {
-    title: 'Pecho + tríceps', focus: 'Pecho superior · hombros · tríceps',
+    title: 'Empuje', focus: 'Pecho superior · hombro lateral · tríceps',
     items: [
-      { ex: 'press_inclinado', sets: 3, reps: [6, 10], rest: '2–3 min', restSec: 150 },
+      { ex: 'press_inclinado_barra', sets: 3, reps: [6, 10], rest: '2–3 min', restSec: 150, isNew: true },
       { ex: 'press_maquina', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120 },
-      { ex: 'cruce_poleas', sets: 3, reps: [12, 15], rest: '60–90 s', restSec: 75, isNew: true },
-      { ex: 'elev_laterales', sets: 3, reps: [12, 20], rest: '60–90 s', restSec: 75, extra: true },
-      { ex: 'fondos', sets: 2, reps: [8, 12], rest: '2 min', restSec: 120 },
+      { ex: 'apertura_baja', sets: 3, reps: [12, 15], rest: '60–90 s', restSec: 75, isNew: true },
+      { ex: 'lat_polea', sets: 3, reps: [12, 15], perSide: true, rest: '60 s', restSec: 60, extra: true },
       { ex: 'ext_triceps', sets: 3, reps: [10, 15], rest: '60–90 s', restSec: 75 },
+      { ex: 'ext_sobre_cabeza', sets: 2, reps: [10, 15], rest: '60–90 s', restSec: 75 },
     ],
-    bike: '20 min moderados al terminar',
+    cardio: { ex: 'escaladora', text: '15–20 min moderados al terminar', short: 'Escaladora 15–20' },
   },
   {
-    title: 'Espalda + bíceps', focus: 'Espalda en V · bíceps',
+    title: 'Jalón', focus: 'Espalda en V · bíceps',
     items: [
-      { ex: 'dominadas', sets: 3, reps: [6, 10], rest: '2 min', restSec: 120, extra: true, isNew: true },
-      { ex: 'remo_sentado', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120, extra: true },
-      { ex: 'remo_mancuerna', sets: 2, reps: [10, 12], perSide: true, rest: '90 s', restSec: 90 },
-      { ex: 'pullover_polea', sets: 2, reps: [12, 15], rest: '60–90 s', restSec: 75, isNew: true },
-      { ex: 'curl', sets: 3, reps: [8, 12], rest: '60–90 s', restSec: 75 },
-      { ex: 'curl_martillo', sets: 2, reps: [10, 15], rest: '60–90 s', restSec: 75 },
+      { ex: 'jalon', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120, extra: true },
+      { ex: 'remo_barra', sets: 3, reps: [6, 10], rest: '2–3 min', restSec: 150, isNew: true },
+      { ex: 'remo_sentado', sets: 3, reps: [10, 12], rest: '2 min', restSec: 120, extra: true },
+      { ex: 'pullover_polea', sets: 2, reps: [12, 15], rest: '60–90 s', restSec: 75 },
+      { ex: 'face_pull', sets: 2, reps: [15, 15], rest: '60–90 s', restSec: 75 },
+      { ex: 'curl_barra', sets: 3, reps: [8, 12], rest: '60–90 s', restSec: 75, isNew: true },
+      { ex: 'curl_cuerda', sets: 2, reps: [10, 15], rest: '60–90 s', restSec: 75, isNew: true },
     ],
-    bike: null,
+    cardio: { ex: 'escaladora', text: '15–20 min moderados al terminar', short: 'Escaladora 15–20' },
   },
   {
     title: 'Pierna + abdomen', focus: 'Cuádriceps · femoral · pantorrilla · core',
     items: [
-      { ex: 'prensa', sets: 3, reps: [10, 12], rest: '2 min', restSec: 120, isNew: true },
-      { ex: 'ext_cuadriceps', sets: 3, reps: [12, 15], rest: '90 s', restSec: 90, isNew: true },
-      { ex: 'curl_femoral', sets: 3, reps: [10, 15], rest: '90 s', restSec: 90, isNew: true },
+      { ex: 'prensa', sets: 3, reps: [10, 12], rest: '2 min', restSec: 120 },
+      { ex: 'rdl_barra', sets: 3, reps: [8, 10], rest: '2 min', restSec: 120, isNew: true },
+      { ex: 'curl_femoral', sets: 3, reps: [10, 15], rest: '90 s', restSec: 90 },
+      { ex: 'ext_cuadriceps', sets: 2, reps: [12, 15], rest: '90 s', restSec: 90 },
       { ex: 'talones', sets: 3, reps: [12, 20], rest: '60–90 s', restSec: 75 },
-      { ex: 'crunch_polea', sets: 3, reps: [10, 15], rest: '60 s', restSec: 60, isNew: true },
+      { ex: 'crunch_polea', sets: 3, reps: [10, 15], rest: '60 s', restSec: 60 },
       { ex: 'elev_piernas', sets: 3, reps: [10, 15], rest: '60 s', restSec: 60 },
     ],
-    bike: 'Opcional: 10 min suaves si te sientes recuperado',
+    cardio: { ex: 'bici', text: 'Opcional: 10–15 min suaves', short: 'Bici opcional' },
   },
   {
     title: 'Hombros + brazos', focus: 'Deltoides · bíceps · tríceps',
     items: [
       { ex: 'press_hombro', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120 },
-      { ex: 'lat_polea', sets: 3, reps: [12, 15], perSide: true, rest: '60 s', restSec: 60, extra: true, isNew: true },
-      { ex: 'pec_deck_inv', sets: 3, reps: [12, 20], rest: '60–90 s', restSec: 75, isNew: true },
-      { ex: 'curl_polea', sets: 3, reps: [10, 15], rest: '60–90 s', restSec: 75, isNew: true },
-      { ex: 'ext_sobre_cabeza', sets: 3, reps: [10, 15], rest: '60–90 s', restSec: 75, isNew: true },
-      { ex: 'curl_martillo', sets: 2, reps: [10, 15], rest: '60–90 s', restSec: 75, cue: 'Codos estables; muñecas neutras.' },
+      { ex: 'elev_laterales', sets: 4, reps: [12, 20], rest: '60–90 s', restSec: 75, extra: true, cue: 'Controla la bajada y evita balancearte.' },
+      { ex: 'pajaro_polea', sets: 3, reps: [12, 20], rest: '60–90 s', restSec: 75, isNew: true },
+      { ex: 'curl_polea', sets: 3, reps: [10, 15], rest: '60–90 s', restSec: 75 },
+      { ex: 'press_frances', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90, isNew: true },
+      { ex: 'curl_inclinado', sets: 2, reps: [10, 12], rest: '60–90 s', restSec: 75 },
     ],
-    bike: '20–25 min moderados',
+    cardio: { ex: 'escaladora', text: '15–20 min moderados al terminar', short: 'Escaladora 15–20' },
   },
   {
-    title: 'Torso completo', focus: 'Pecho · espalda · deltoides',
+    title: 'Torso en V', focus: 'Pecho · espalda · deltoides · abdomen',
     items: [
       { ex: 'press_inclinado', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120, cue: 'Usa un peso controlable, sin rebotes.' },
-      { ex: 'jalon', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120, extra: true, cue: 'Controla la subida; evita tirones.' },
-      { ex: 'remo_sentado', sets: 3, reps: [10, 12], rest: '2 min', restSec: 120, cue: 'Pausa breve con los codos atrás.' },
-      { ex: 'elev_laterales', sets: 4, reps: [12, 20], rest: '60–90 s', restSec: 75, extra: true, cue: 'Controla la bajada y evita balancearte.' },
-      { ex: 'face_pull', sets: 2, reps: [15, 15], rest: '60–90 s', restSec: 75, isNew: true },
-      { ex: 'ext_triceps', sets: 2, reps: [10, 15], rest: '60–90 s', restSec: 75, cue: 'Mantén los codos estables.' },
+      { ex: 'jalon_cerrado', sets: 3, reps: [10, 12], rest: '2 min', restSec: 120, extra: true, isNew: true },
+      { ex: 'remo_polea_una', sets: 3, reps: [10, 12], perSide: true, rest: '90 s', restSec: 90, isNew: true },
+      { ex: 'cruce_poleas', sets: 2, reps: [12, 15], rest: '60–90 s', restSec: 75 },
+      { ex: 'lat_polea', sets: 3, reps: [12, 15], perSide: true, rest: '60 s', restSec: 60, extra: true },
+      { ex: 'face_pull', sets: 2, reps: [15, 15], rest: '60–90 s', restSec: 75 },
+      { ex: 'crunch_polea', sets: 2, reps: [12, 15], rest: '60 s', restSec: 60 },
     ],
-    bike: '20–30 min moderados',
+    cardio: { ex: 'escaladora', text: '20 min moderados al terminar', short: 'Escaladora 20' },
   },
 ];
 
 const RULES = {
-  warmup: '5 min de bicicleta suave y 1–2 series ligeras del primer ejercicio. No cuentan como series efectivas.',
+  warmup: '5 min de cardio suave y 1–2 series ligeras del primer ejercicio. No cuentan como series efectivas.',
   execution: 'Usa un peso que puedas controlar y deja 1–3 repeticiones en reserva. Detén cualquier movimiento que cause dolor agudo.',
   firstWeeks: 'Prioriza la técnica y deja 2–3 repeticiones posibles al final de cada serie.',
   progression: 'Doble progresión: suma repeticiones con el mismo peso. Cuando completes el máximo del rango en todas las series con técnica limpia, sube el peso lo mínimo y vuelve al rango bajo.',
+  cardio: 'Escaladora los días de torso; bici el día de pierna. En la escaladora no te cuelgues de los barandales.',
   steps: '8 000–10 000 pasos al día.',
   extra: 'Desde la semana 5, si te recuperas bien: +1 serie en espalda y elevaciones laterales.',
   measure: 'Pésate 3–4 mañanas por semana y compara el promedio. Cintura cada 2 semanas, fotos cada mes con la misma luz.',

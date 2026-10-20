@@ -52,6 +52,7 @@ const setsFor = (item) => item.sets + (state.extra && item.extra ? 1 : 0);
 const repsText = (item) => (item.reps[0] === item.reps[1] ? `${item.reps[0]}` : `${item.reps[0]}–${item.reps[1]}`);
 const unitWord = (item) => (item.unit === 's' ? 'seg' : 'reps');
 const loadOf = (item) => EXERCISES[item.ex].load || 'kg';
+const illOf = (exId) => EXERCISES[exId].ill || exId;
 
 function todayLog() { return state.log[todayKey()] || (state.log[todayKey()] = {}); }
 function todaySets(item) {
@@ -154,7 +155,7 @@ function renderToday(d) {
     const total = setsFor(it);
     const done = doneCount(it);
     html += `<li><a class="row${done >= total ? ' is-complete' : ''}" href="#/ej/${d}/${i}">
-        <span class="thumb">${illustration(it.ex, null, true)}</span>
+        <span class="thumb">${illustration(illOf(it.ex), null, true)}</span>
         <span>
           <span class="row__name">${ex.name}${it.isNew ? '<span class="tag">Nuevo</span>' : ''}</span>
           <span class="row__rx">${total} × ${repsText(it)}${it.unit === 's' ? ' s' : ''}${it.perSide ? ' por lado' : ''} · ${it.rest}</span>
@@ -162,7 +163,7 @@ function renderToday(d) {
         </span>
       </a></li>`;
   });
-  if (day.bike) html += checkRow('_bike', `<span class="thumb">${illustration('bici', null, true)}</span>`, 'Bicicleta', day.bike);
+  if (day.cardio) html += checkRow('_cardio', `<span class="thumb">${illustration(day.cardio.ex, null, true)}</span>`, EXERCISES[day.cardio.ex].name, day.cardio.text);
   html += stepsRow() + '</ul>';
   paint(html, 'view');
   fitThumbs();
@@ -240,7 +241,7 @@ function renderExercise(d, i) {
       <a class="back" href="#/hoy/${d}">${ICON.back}${DAY_NAMES[d]}</a>
       <span class="counter">${i + 1} de ${day.items.length}</span>
     </div>
-    <div class="hero">${illustration(it.ex, ex.name)}</div>
+    <div class="hero">${illustration(illOf(it.ex), ex.name)}</div>
     <h1 class="ex-title">${ex.name}</h1>
     ${ex.alt ? `<p class="ex-alt">${ex.alt}</p>` : ''}
     <dl class="rx">
@@ -287,7 +288,7 @@ function renderExercise(d, i) {
   if (nextIt) {
     html += `<div class="next"><a class="btn btn--block" href="#/ej/${d}/${i + 1}"><span><small>Siguiente</small>${EXERCISES[nextIt.ex].name}</span>${ICON.next}</a></div>`;
   } else {
-    html += `<div class="next"><a class="btn btn--block" href="#/hoy/${d}"><span><small>Último ejercicio</small>${day.bike ? 'Ir a la bicicleta' : 'Terminar el día'}</span>${ICON.next}</a></div>`;
+    html += `<div class="next"><a class="btn btn--block" href="#/hoy/${d}"><span><small>Último ejercicio</small>${day.cardio ? `Ir a ${EXERCISES[day.cardio.ex].name.toLowerCase()}` : 'Terminar el día'}</span>${ICON.next}</a></div>`;
   }
 
   if (past.length) {
@@ -319,7 +320,7 @@ function renderPlan() {
     <ul class="week">${DAYS.map((day, i) => `<li class="${i === t ? 'is-today' : ''}"><a href="#/hoy/${i}">
         <span class="d">${DAY_SHORT[i]}</span>
         <span class="t">${day.title}<small>${day.focus}</small></span>
-        <span class="b">${day.bike ? day.bike.replace(/ moderados.*| al terminar/g, '').replace('Opcional: ', 'Opcional ').replace(' suaves si te sientes recuperado', '') : '—'}</span>
+        <span class="b">${day.cardio ? day.cardio.short : '—'}</span>
       </a></li>`).join('')}
       <li class="${t >= 5 ? 'is-today' : ''}"><a href="#/hoy/5"><span class="d">S·D</span><span class="t">Descanso<small>Paseo o movilidad</small></span><span class="b">Recuperación</span></a></li>
     </ul>
@@ -330,6 +331,7 @@ function renderPlan() {
       <div><dt>Ejecución</dt><dd>${RULES.execution}</dd></div>
       <div><dt>Semanas 1–2</dt><dd>${RULES.firstWeeks}</dd></div>
       <div><dt>Progresión</dt><dd>${RULES.progression}</dd></div>
+      <div><dt>Cardio</dt><dd>${RULES.cardio}</dd></div>
       <div><dt>Pasos</dt><dd>${RULES.steps}</dd></div>
       <div><dt>Volumen extra</dt><dd>${RULES.extra}</dd></div>
       <div><dt>Cómo medir</dt><dd>${RULES.measure}</dd></div>
