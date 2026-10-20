@@ -370,6 +370,31 @@ a.row:active .thumb { transform: scale(0.97); }
 .cue { margin: 16px 0 0; max-width: 65ch; }
 .cue-note { margin: 8px 0 0; color: var(--mute); font-size: 14px; }
 
+/* cómo se hace: pasos sobre una línea vertical de puntos */
+.how { margin: 22px 0 0; }
+.how h2 { margin: 0 0 12px; font-size: 13px; font-weight: 600; color: var(--mute); }
+.how ol { list-style: none; margin: 0; padding: 0; position: relative; }
+.how ol::before {
+  content: "";
+  position: absolute;
+  left: 4px; top: 8px; bottom: 8px;
+  width: 1px;
+  background: var(--line-2);
+}
+.how li { position: relative; padding: 0 0 14px 24px; max-width: 65ch; }
+.how li:last-child { padding-bottom: 0; }
+.how li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 6px;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1.5px solid var(--ink);
+}
+.how li:last-child::before { border-color: var(--mute); }
+.how b { display: block; font-size: 13px; font-weight: 600; color: var(--mute); }
+
 .last {
   margin: 22px 0 0;
   padding: 14px 16px;

@@ -187,19 +187,6 @@ const POSES = {
       mark([s[0] - 6, s[1] - 1]) + mark([s2[0] + 6, s2[1] - 1]) + label('Deltoide lateral', [s2[0] + 12, s2[1] - 6], [262, 58]);
   },
 
-  pajaros() {
-    // de perfil: cadera flexionada; la mano sube en vertical hasta la altura del hombro
-    const { svg, J } = side({
-      hip: [168, 170], torso: -35, headA: -28,
-      arm: { a: 88, b: 92 },
-      leg: { a: 100, b: 82 },
-      item: (h) => dbSide(h, 0), farItem: (h) => dbSide(h, 0, true),
-    });
-    const h = J.arm[2];
-    return floor() + moveLine([h[0] + 46, h[1] - 2], [h[0] + 46, J.sh[1] + 18]) + svg +
-      mark([J.sh[0] - 6, J.sh[1] - 8]) + label('Deltoide posterior', [J.sh[0] - 12, J.sh[1] - 12], [150, 78], -1);
-  },
-
   dominadas() {
     const { svg, J } = front({
       shY: 112, hipY: 176,
@@ -211,34 +198,8 @@ const POSES = {
       mark([182, 140]) + mark([218, 140]) + label('Dorsal ancho', [176, 146], [128, 186], -1);
   },
 
-  press_hombro() {
-    const { svg, J } = front({
-      shY: 138, hipY: 196, thLen: 16,
-      arm: { a: 170, b: -90 }, leg: { a: 100, b: 90 },
-      back: () => rect(172, 96, 56, 120, 10, C.frame) + bar([200, 266], [200, 230]) + pad([150, 228], [250, 228]),
-      item: (h) => dbSide(h, 0),
-    });
-    const s = J.armL[0], s2 = J.armR[0];
-    return floor() + svg + moveLine([J.armL[2][0], 92], [J.armL[2][0], 52]) + moveLine([J.armR[2][0], 92], [J.armR[2][0], 52]) +
-      mark([s[0] - 4, s[1] - 2]) + mark([s2[0] + 4, s2[1] - 2]) + label('Deltoides', [s2[0] + 10, s2[1] + 4], [276, 168]);
-  },
-
   curl() { return curlPose('end'); },
   curl_martillo() { return curlPose('side'); },
-
-  curl_inclinado() {
-    const hip = [184, 208];
-    const { svg, J } = side({
-      hip, torso: -120, headA: -112,
-      arm: { a: 92, b: -40 }, farShift: [-3, -2],
-      leg: { a: 15, b: 95 },
-      back: () => bench(hip, -120, 30),
-      item: (h) => dbEnd(h), farItem: (h) => dbEnd(h),
-    });
-    const el = J.arm[1];
-    return floor() + svg + moveArc(el, 48, 84, -30) + mark(lerp(J.arm[0], J.arm[1], 0.55).map((v, i) => v + (i ? 0 : 7))) +
-      label('Bíceps', [J.arm[0][0] + 14, J.arm[0][1] + 18], [250, 120]);
-  },
 
   press_inclinado() {
     const hip = [176, 206];
@@ -340,80 +301,168 @@ const POSES = {
       mark([J.sh[0] - 8, J.sh[1] + 2]) + label('Deltoide posterior', [J.sh[0] - 4, J.sh[1] + 8], [226, 176]);
   },
 
-  goblet() {
-    const { svg, J } = side({
-      hip: [172, 214], torso: -70, headA: -66,
-      arm: { to: [216, 174], bend: -1 },
-      leg: { a: 5, b: 105 },
-      item: (h) => dbSide([h[0] + 3, h[1] - 6], 90),
+  press_hombro() {
+    const { svg, J } = front({
+      shY: 138, hipY: 196, thLen: 16,
+      arm: { a: 170, b: -90 }, leg: { a: 100, b: 90 },
+      back: () => bar([112, 266], [112, 50]) + bar([288, 266], [288, 50]) + seg([108, 54], [292, 54], 7, C.frame) +
+        rect(172, 96, 56, 120, 10, C.frame) + bar([200, 266], [200, 230]) + pad([150, 228], [250, 228]),
+      item: (h) => seg([h[0], h[1] - 12], [h[0], 60], 5, C.metalDark) + rect(f(h[0] - 4.5), f(h[1] - 13), 9, 26, 4.5, C.metal),
     });
-    return floor() + moveLine([114, 130], [114, 214]) + svg +
-      mark([206, 214]) + mark([158, 222]) + label('Cuádriceps · glúteo', [212, 220], [250, 240]);
-  },
-
-  rdl() {
-    const { svg, J } = side({
-      hip: [170, 171], torso: -25, headA: -18,
-      arm: { a: 90, b: 90 },
-      leg: { a: 100, b: 85 },
-      item: (h) => dbEnd(h), farItem: (h) => dbEnd(h),
-    });
-    return floor() + moveArc(J.hip, 96, -30, -78) + svg +
-      mark([160, 196]) + mark([158, 172]) + label('Isquios · glúteo', [156, 190], [150, 112], -1);
-  },
-
-  zancadas() {
-    const { svg, J } = side({
-      hip: [190, 216], torso: -90,
-      arm: { a: 92, b: 90 },
-      leg: { a: 0, b: 90 }, farLeg: { a: 105, b: 190, ft: 120 }, farShift: [-2, -2],
-      item: (h) => dbEnd(h), farItem: (h) => dbEnd(h),
-    });
-    return floor() + svg + moveLine([290, 176], [290, 230]) +
-      mark([222, 210]) + mark([176, 226]) + label('Cuádriceps · glúteo', [228, 204], [252, 132]);
+    const s = J.armL[0], s2 = J.armR[0];
+    return floor() + svg + moveLine([76, 120], [76, 76]) + moveLine([324, 120], [324, 76]) +
+      mark([s[0] - 4, s[1] - 2]) + mark([s2[0] + 4, s2[1] - 2]) + label('Deltoides', [s2[0] + 10, s2[1] + 4], [262, 176]);
   },
 
   talones() {
     const { svg, J } = side({
       hip: [200, 154], torso: -90,
-      arm: { a: 92, b: 90 },
+      arm: { to: [210, 78], bend: 1 },
       leg: { a: 90, b: 90, ft: 32 },
-      back: () => rect(206, 254, 76, 12, 3, C.metal),
-      item: (h) => dbEnd(h), farItem: (h) => dbEnd(h),
+      back: () => bar([166, 266], [166, 60]) + seg([166, 66], [222, 66], 7, C.frame) + rect(206, 254, 76, 12, 3, C.metal),
+      front: () => rect(182, 70, 40, 12, 6, C.metal),
     });
-    return floor() + svg + moveLine([168, 252], [168, 222]) +
-      mark([193, 226]) + label('Pantorrilla', [187, 222], [100, 196], -1);
+    return floor() + svg + moveLine([140, 252], [140, 222]) +
+      mark([193, 226]) + label('Pantorrilla', [187, 222], [124, 186], -1);
   },
 
-  crunch() {
-    const { svg, J } = side({
-      hip: [214, 247], torso: -160, headA: -140,
-      arm: { a: -104, b: 150 },
-      leg: { a: -50, b: 76, ft: 0 },
+  cruce_poleas() {
+    const { svg } = front({
+      shY: 104, hipY: 168,
+      arm: { to: [194, 156], bend: 1 }, armR: { to: [206, 156], bend: -1 }, leg: { a: 94, b: 90 },
+      back: () => bar([78, 266], [78, 40]) + bar([322, 266], [322, 40]),
+      item: (h) => grip(h),
     });
-    return floor() + moveArc(J.hip, 92, -168, -136) + svg +
-      mark([188, 222]) + label('Abdomen', [192, 216], [236, 150]);
+    return floor() + pulley([90, 48]) + pulley([310, 48]) + cable([194, 156], [92, 52]) + cable([206, 156], [308, 52]) + svg +
+      moveLine([122, 108], [162, 140]) + moveLine([278, 108], [238, 140]) +
+      mark([188, 124]) + mark([212, 124]) + label('Pecho', [216, 130], [252, 212]);
   },
 
-  plancha() {
+  pullover_polea() {
     const { svg, J } = side({
-      hip: [190, 236], torso: -8, headA: -4,
-      arm: { a: 90, b: 0 },
-      leg: { a: 172, b: 172, ft: 100 },
+      hip: [176, 170], torso: -78, headA: -76,
+      arm: { a: 70, b: 68 },
+      leg: { a: 95, b: 88 },
+      back: () => bar([312, 266], [312, 34]),
+      item: (h) => grip(h),
     });
-    return floor() + seg([92, 216], [290, 188], 1.5, C.mute, dash) + svg +
-      mark([214, 250]) + label('Core', [220, 246], [252, 140]);
+    return floor() + pulley([300, 40]) + cable(J.arm[2], [298, 44]) + moveArc(J.sh, 84, -14, 60) + svg +
+      mark([J.sh[0] - 14, J.sh[1] + 20]) + label('Dorsal ancho', [J.sh[0] - 20, J.sh[1] + 16], [122, 96], -1);
   },
 
-  elev_rodillas() {
-    const { svg, J } = side({
-      hip: [188, 176], torso: -90,
-      arm: { a: 90, b: 0 },
-      leg: { a: -4, b: 88, ft: 10 },
-      back: () => bar([156, 266], [156, 56]) + rect(150, 84, 14, 98, 7, C.metal) + seg([168, 154], [244, 154], 9, C.metal),
+  lat_polea() {
+    const { svg, J } = front({
+      shY: 100, hipY: 164,
+      arm: { a: 172, b: 182 }, armR: { a: 92, b: 94 }, leg: { a: 92, b: 90 },
+      back: () => bar([316, 266], [316, 232]),
     });
-    return floor() + moveArc(J.hip, 62, 82, 6) + svg +
-      mark([206, 164]) + label('Abdomen bajo', [210, 160], [268, 110]);
+    const h = J.armL[2], s = J.armL[0];
+    return floor() + pulley([304, 254]) + moveArc(s, 86, 112, 168) + svg + cable(h, [300, 252]) + grip(h) +
+      mark([s[0] - 6, s[1] - 1]) + label('Deltoide lateral', [s[0] - 10, s[1] + 4], [150, 200], -1);
+  },
+
+  pec_deck_inv() {
+    const { svg, J } = side({
+      hip: [180, 214], torso: -90, headA: -88,
+      arm: { a: 0, b: 0 },
+      leg: { a: 0, b: 90 },
+      back: () => bar([300, 266], [300, 40]) + seg([290, 70], [300, 70], 6, C.frame) + bar([180, 266], [180, 232]) + pad([146, 230], [214, 230]) +
+        rect(198, 128, 11, 72, 5.5, C.metal),
+      item: (h) => seg(h, [290, 72], 5, C.metalDark) + rect(f(h[0] - 4), f(h[1] - 12), 8, 24, 4, C.metal),
+    });
+    return floor() + svg + moveLine([264, 178], [216, 178]) +
+      mark([J.sh[0] - 12, J.sh[1] - 4]) + label('Deltoide posterior', [J.sh[0] - 14, J.sh[1] - 10], [118, 62]);
+  },
+
+  curl_polea() {
+    const { svg, J } = side({
+      hip: [190, 172], torso: -90,
+      arm: { a: 92, b: -60 },
+      leg: { a: 91, b: 90 },
+      back: () => bar([316, 266], [316, 236]),
+      item: (h) => grip(h),
+    });
+    const el = J.arm[1];
+    const bi = lerp(J.arm[0], J.arm[1], 0.55);
+    return floor() + pulley([304, 254]) + cable(J.arm[2], [300, 252]) + moveArc(el, 48, 84, -54) + svg +
+      mark([bi[0] + 6, bi[1]]) + label('Bíceps', [bi[0] + 12, bi[1] - 4], [120, 120], -1);
+  },
+
+  ext_sobre_cabeza() {
+    const { svg, J } = side({
+      hip: [196, 176], torso: -78, headA: -78,
+      arm: { a: -75, b: -20 },
+      leg: { a: 78, b: 96 }, farLeg: { a: 106, b: 86 },
+      back: () => bar([76, 266], [76, 40]),
+      item: (h) => grip(h),
+    });
+    const el = J.arm[1];
+    const tri = lerp(J.arm[0], J.arm[1], 0.5);
+    return floor() + pulley([88, 104]) + cable(J.arm[2], [92, 104]) + moveArc(el, 46, 205, 330) + svg +
+      mark([tri[0] - 7, tri[1] + 2]) + label('Tríceps', [tri[0] - 2, tri[1] + 8], [292, 150]);
+  },
+
+  prensa() {
+    const hip = [160, 226];
+    const foot = [228, 176];
+    const plate = at(foot, -40, 10);
+    const { svg, J } = side({
+      hip, torso: -150, headA: -156,
+      arm: { a: 62, b: 18 },
+      leg: { to: foot, bend: -1, ft: -70 },
+      back: () => seg([196, 262], [334, 146], 8, C.frame) + bench(hip, -150, 14) +
+        seg(at(plate, 50, 30), at(plate, 230, 30), 9, C.metal),
+    });
+    const quad = lerp(J.leg[0], J.leg[1], 0.55);
+    return floor() + svg + moveLine([270, 214], [312, 178]) +
+      mark([quad[0] + 2, quad[1] - 8]) + label('Cuádriceps · glúteo', [quad[0] + 6, quad[1] - 14], [224, 92]);
+  },
+
+  ext_cuadriceps() {
+    const { svg, J } = side({
+      hip: [176, 206], torso: -96, headA: -94,
+      arm: { a: 95, b: 80 },
+      leg: { a: 0, b: -12, ft: -80 },
+      back: () => rect(138, 128, 14, 84, 7, C.metal) + bar([180, 266], [180, 228]) + pad([144, 226], [222, 226]),
+      front: (J) => seg(J.leg[1], [J.leg[2][0] - 2, J.leg[2][1] + 10], 4, C.metalDark) + dot([J.leg[2][0] - 2, J.leg[2][1] + 10], 8, C.metal),
+    });
+    return floor() + moveArc(J.leg[1], 60, 86, -8) + svg +
+      mark([204, 198]) + label('Cuádriceps', [208, 192], [244, 128]);
+  },
+
+  curl_femoral() {
+    const { svg, J } = side({
+      hip: [168, 202], torso: -2, headA: 2,
+      arm: { a: 120, b: 30 },
+      leg: { a: 180, b: -60, ft: -150 }, farShift: [0, -3],
+      back: () => pad([96, 226], [270, 226]) + bar([120, 266], [120, 232]) + bar([250, 266], [250, 232]),
+      front: (J) => dot(at(J.leg[2], 30, 9), 8, C.metal),
+    });
+    return floor() + moveArc(J.leg[1], 56, 182, 286) + svg +
+      mark([146, 192]) + label('Isquiotibiales', [142, 188], [128, 110], -1);
+  },
+
+  crunch_polea() {
+    const { svg, J } = side({
+      hip: [180, 214], torso: -28, headA: 40,
+      arm: { to: [252, 182], bend: -1 },
+      leg: { a: 92, b: 180, ft: 180 },
+      back: () => bar([316, 266], [316, 34]),
+      item: (h) => grip(h),
+    });
+    return floor() + pulley([302, 40]) + cable(J.arm[2], [300, 44]) + moveArc(J.hip, 98, -62, -26) + svg +
+      mark([214, 210]) + label('Abdomen', [210, 214], [124, 150], -1);
+  },
+
+  elev_piernas() {
+    const { svg, J } = side({
+      hip: [196, 178], torso: -90, headA: -90,
+      arm: { to: [200, 50], bend: 1 },
+      leg: { a: -8, b: 88, ft: 10 },
+      back: () => bar([132, 266], [132, 40]) + bar([276, 266], [276, 40]) + seg([128, 46], [280, 46], 7, C.metal),
+    });
+    return floor() + moveArc(J.hip, 70, 84, 6) + svg +
+      mark([214, 160]) + label('Abdomen bajo', [218, 156], [252, 108]);
   },
 
   bici() {

@@ -289,3 +289,7 @@ Ease-out `cubic-bezier(0.23, 1, 0.32, 1)` for state changes; drawer `cubic-bezie
 - **Don't** add shadows to plates or rows; only the rest timer floats.
 - **Don't** use uppercase tracked labels in the interface; that style lives only on illustration annotations.
 - **Don't** give figures faces, outlines or colored highlights on the target muscle.
+
+## Addendum: how-to steps
+
+Exercise detail shows "Cómo se hace" as three steps (Posición, Movimiento, Evita) on a vertical 1px hairline with 9px ring dots, the last ring muted. It reuses the dot-rail grammar vertically; no numbers, no cards.

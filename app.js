@@ -250,6 +250,8 @@ function renderExercise(d, i) {
     </dl>
     <p class="cue">${it.cue || ex.cue}</p>
     ${it.note ? `<p class="cue-note">${it.note}</p>` : ''}
+    ${ex.how && ex.how.length ? `<section class="how"><h2>Cómo se hace</h2><ol>${ex.how.map((t, n) =>
+      `<li><b>${['Posición', 'Movimiento', 'Evita'][n]}</b>${t}</li>`).join('')}</ol></section>` : ''}
     ${state.extra && it.extra ? '<p class="cue-note">Incluye la serie extra de la semana 5+.</p>' : ''}`;
 
   if (last) {
