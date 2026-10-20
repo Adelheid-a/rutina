@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ejemplo ilustraciones B</title>
+<style>
+  :root {
+    --bg: #0d0e10;
+    --card: #16171a;
+    --line: #2a2c30;
+    --skin: #b9b5af;
+    --shirt: #ecebe8;
+    --shorts: #3b3d42;
+    --hair: #050506;
+    --metal: #6c6f75;
+    --ink: #f4f4f2;
+    --mute: #8a8d93;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    padding: 32px 16px;
+  }
+  h1 { font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); margin: 0 auto 20px; max-width: 1180px; }
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); max-width: 1180px; margin: 0 auto; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+  svg { display: block; width: 100%; height: auto; }
+  .meta { padding: 14px 18px 18px; border-top: 1px solid var(--line); }
+  .meta b { display: block; font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+  .meta span { color: var(--mute); font-variant-numeric: tabular-nums; }
+  .lbl { font: 600 10.5px/1 -apple-system, "Segoe UI", system-ui, sans-serif; letter-spacing: .12em; fill: var(--mute); text-transform: uppercase; }
+</style>
+</head>
+<body>
+<h1>Opción B · ilustraciones dibujadas en código</h1>
+<div class="grid">
+
+  <!-- Elevaciones laterales: vista frontal -->
+  <article class="card">
+    <svg viewBox="0 0 400 300" aria-label="Elevaciones laterales">
+      <line x1="40" y1="266" x2="360" y2="266" stroke="var(--line)" stroke-width="2"/>
+      <path d="M150 188 A86 86 0 0 1 92 128" fill="none" stroke="var(--mute)" stroke-width="1.5" stroke-dasharray="3 6" stroke-linecap="round"/>
+      <path d="M250 188 A86 86 0 0 0 308 128" fill="none" stroke="var(--mute)" stroke-width="1.5" stroke-dasharray="3 6" stroke-linecap="round"/>
+      <!-- piernas -->
+      <path d="M189 196 L187 252 M211 196 L213 252" stroke="var(--skin)" stroke-width="15" stroke-linecap="round"/>
+      <ellipse cx="184" cy="258" rx="13" ry="6" fill="var(--shirt)"/>
+      <ellipse cx="216" cy="258" rx="13" ry="6" fill="var(--shirt)"/>
+      <path d="M175 164 L225 164 L229 204 L205 204 L200 186 L195 204 L171 204 Z" fill="var(--shorts)"/>
+      <!-- brazos -->
+      <path d="M174 104 L130 111 L92 106 M226 104 L270 111 L308 106" fill="none" stroke="var(--skin)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="80" y="98" width="22" height="16" rx="5" fill="var(--metal)"/>
+      <rect x="298" y="98" width="22" height="16" rx="5" fill="var(--metal)"/>
+      <!-- torso -->
+      <path d="M200 84 L200 96" stroke="var(--skin)" stroke-width="13" stroke-linecap="round"/>
+      <path d="M166 99 Q200 89 234 99 L232 112 L226 112 L223 168 L177 168 L174 112 L168 112 Z" fill="var(--shirt)"/>
+      <path d="M170 101 L150 106 M230 101 L250 106" stroke="var(--shirt)" stroke-width="17" stroke-linecap="round"/>
+      <!-- cabeza -->
+      <circle cx="200" cy="64" r="19" fill="var(--skin)"/>
+      <path d="M180 62 Q178 40 200 40 Q224 40 221 60 Q214 50 200 52 Q188 52 180 62 Z" fill="var(--hair)"/>
+      <!-- músculo -->
+      <circle cx="166" cy="103" r="4.5" fill="var(--bg)" stroke="var(--ink)" stroke-width="2"/><circle cx="166" cy="103" r="9" fill="none" stroke="var(--ink)" stroke-opacity=".35"/>
+      <circle cx="234" cy="103" r="4.5" fill="var(--bg)" stroke="var(--ink)" stroke-width="2"/><circle cx="234" cy="103" r="9" fill="none" stroke="var(--ink)" stroke-opacity=".35"/>
+      <path d="M240 96 L264 58 L344 58" fill="none" stroke="var(--ink)" stroke-opacity=".5" stroke-width="1"/>
+      <text x="268" y="50" class="lbl">Deltoide lateral</text>
+    </svg>
+    <div class="meta"><b>Elevaciones laterales</b><span>3 × 12–20 · descanso 60–90 s</span></div>
+  </article>
+
+  <!-- Sentadilla goblet: vista lateral -->
+  <article class="card">
+    <svg viewBox="0 0 400 300" aria-label="Sentadilla goblet">
+      <line x1="40" y1="266" x2="360" y2="266" stroke="var(--line)" stroke-width="2"/>
+      <path d="M118 128 L118 216" stroke="var(--mute)" stroke-width="1.5" stroke-dasharray="3 6" stroke-linecap="round"/>
+      <path d="M111 206 L118 218 L125 206" fill="none" stroke="var(--mute)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- pierna -->
+      <path d="M232 212 L204 254" stroke="var(--skin)" stroke-width="15" stroke-linecap="round"/>
+      <ellipse cx="214" cy="259" rx="18" ry="6" fill="var(--shirt)"/>
+      <path d="M164 208 L232 212" stroke="var(--skin)" stroke-width="20" stroke-linecap="round"/>
+      <path d="M162 206 L196 210" stroke="var(--shorts)" stroke-width="28" stroke-linecap="round"/>
+      <!-- torso -->
+      <path d="M190 104 L188 116" stroke="var(--skin)" stroke-width="12" stroke-linecap="round"/>
+      <path d="M164 194 L182 136" stroke="var(--shirt)" stroke-width="40" stroke-linecap="round"/>
+      <!-- brazo + mancuerna -->
+      <path d="M186 140 L202 178 L214 150" fill="none" stroke="var(--skin)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M186 140 L194 160" stroke="var(--shirt)" stroke-width="17" stroke-linecap="round"/>
+      <rect x="205" y="122" width="24" height="11" rx="4" fill="var(--metal)"/>
+      <rect x="213" y="131" width="8" height="26" fill="var(--metal)"/>
+      <rect x="205" y="155" width="24" height="11" rx="4" fill="var(--metal)"/>
+      <!-- cabeza -->
+      <circle cx="194" cy="96" r="19" fill="var(--skin)"/>
+      <path d="M176 100 Q170 76 192 74 Q212 73 213 90 Q200 84 188 92 Q182 100 176 100 Z" fill="var(--hair)"/>
+      <!-- músculo -->
+      <circle cx="206" cy="206" r="4.5" fill="var(--bg)" stroke="var(--ink)" stroke-width="2"/><circle cx="206" cy="206" r="9" fill="none" stroke="var(--ink)" stroke-opacity=".35"/>
+      <circle cx="152" cy="212" r="4.5" fill="var(--bg)" stroke="var(--ink)" stroke-width="2"/><circle cx="152" cy="212" r="9" fill="none" stroke="var(--ink)" stroke-opacity=".35"/>
+      <path d="M212 210 L250 236 L344 236" fill="none" stroke="var(--ink)" stroke-opacity=".5" stroke-width="1"/>
+      <text x="256" y="228" class="lbl">Cuádriceps · glúteo</text>
+    </svg>
+    <div class="meta"><b>Sentadilla goblet</b><span>3 × 8–12 · descanso 2 min</span></div>
+  </article>
+
+  <!-- Jalón al pecho: vista lateral -->
+  <article class="card">
+    <svg viewBox="0 0 400 300" aria-label="Jalón al pecho">
+      <!-- máquina -->
+      <path d="M300 266 L300 28 L196 28" fill="none" stroke="var(--line)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="196" cy="30" r="8" fill="var(--card)" stroke="var(--metal)" stroke-width="3"/>
+      <line x1="40" y1="266" x2="360" y2="266" stroke="var(--line)" stroke-width="2"/>
+      <line x1="196" y1="38" x2="196" y2="118" stroke="var(--metal)" stroke-width="1.5"/>
+      <path d="M182 266 L182 210" stroke="var(--line)" stroke-width="8"/>
+      <rect x="146" y="204" width="76" height="12" rx="6" fill="var(--metal)"/>
+      <path d="M226 60 L226 112" stroke="var(--mute)" stroke-width="1.5" stroke-dasharray="3 6" stroke-linecap="round"/>
+      <path d="M219 102 L226 114 L233 102" fill="none" stroke="var(--mute)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- pierna -->
+      <path d="M238 198 L240 252" stroke="var(--skin)" stroke-width="15" stroke-linecap="round"/>
+      <ellipse cx="250" cy="258" rx="18" ry="6" fill="var(--shirt)"/>
+      <path d="M182 196 L238 198" stroke="var(--skin)" stroke-width="19" stroke-linecap="round"/>
+      <path d="M180 194 L212 196" stroke="var(--shorts)" stroke-width="27" stroke-linecap="round"/>
+      <rect x="212" y="176" width="40" height="11" rx="5.5" fill="var(--metal)"/>
+      <!-- torso -->
+      <path d="M176 110 L174 122" stroke="var(--skin)" stroke-width="12" stroke-linecap="round"/>
+      <path d="M180 182 L172 142" stroke="var(--shirt)" stroke-width="40" stroke-linecap="round"/>
+      <!-- brazo + barra -->
+      <path d="M172 136 L162 172 L194 122" fill="none" stroke="var(--skin)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M172 136 L168 154" stroke="var(--shirt)" stroke-width="17" stroke-linecap="round"/>
+      <circle cx="196" cy="120" r="7" fill="var(--metal)"/>
+      <!-- cabeza -->
+      <circle cx="180" cy="100" r="19" fill="var(--skin)"/>
+      <path d="M161 104 Q156 78 178 78 Q199 77 199 94 Q186 88 174 96 Q167 104 161 104 Z" fill="var(--hair)"/>
+      <!-- músculo -->
+      <circle cx="160" cy="152" r="4.5" fill="var(--bg)" stroke="var(--ink)" stroke-width="2"/><circle cx="160" cy="152" r="9" fill="none" stroke="var(--ink)" stroke-opacity=".35"/>
+      <path d="M154 146 L110 98 L48 98" fill="none" stroke="var(--ink)" stroke-opacity=".5" stroke-width="1"/>
+      <text x="48" y="90" class="lbl">Dorsal ancho</text>
+    </svg>
+    <div class="meta"><b>Jalón al pecho</b><span>3 × 8–12 · descanso 2 min</span></div>
+  </article>
+
+</div>
+</body>
+</html>

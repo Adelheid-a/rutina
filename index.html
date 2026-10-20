@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rutina</title>
+<meta name="description" content="Tu rutina de gimnasio del día, sin internet.">
+<meta name="theme-color" content="#0d0e10">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Rutina">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <main id="screen" class="screen"></main>
+
+  <nav class="tabbar" aria-label="Secciones">
+    <a href="#/hoy" class="tab" data-tab="hoy">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+      <span>Hoy</span>
+    </a>
+    <a href="#/plan" class="tab" data-tab="plan">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span>Plan</span>
+    </a>
+  </nav>
+
+  <section id="timer" class="timer" aria-live="polite" hidden>
+    <div class="timer__track"><div class="timer__fill"></div><i class="timer__head"></i></div>
+    <div class="timer__row">
+      <div class="timer__read">
+        <span class="timer__label">Descanso</span>
+        <span class="timer__time" id="timerTime">0:00</span>
+      </div>
+      <button type="button" class="btn btn--ghost" id="timerAdd">+15 s</button>
+      <button type="button" class="btn" id="timerSkip">Saltar</button>
+    </div>
+  </section>
+  <div class="flash" id="flash" aria-hidden="true"></div>
+</div>
+
+<script src="data.js"></script>
+<script src="illus.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
