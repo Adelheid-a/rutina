@@ -262,6 +262,8 @@ A raised plate floating 8px above the tab bar, 18px radius, strong-hairline bord
 Notes (collapsible, 52px summary, chevron rotates 180°), last-session panel (label + 17px values; progression cue under a hairline with an up-arrow), rest-day panel. Plate fill, hairline border, 16px radius, 14–16px padding.
 
 ### Illustrations
+- **Two phases (2026-10-20, owner request):** the exercise detail shows the pose twice, side by side, captioned "Inicio" (stretched) and "Final" (contracted), split by a 1px hairline. Both panels share one 3:4 frame fitted to the union of the two figures. Arrows and the muscle marker appear only on "Final". Thumbnails show "Final" without annotations.
+- **Volume:** body parts are capsules with a cylindrical grayscale gradient, lit from the upper left, with muscle bulges (deltoid cap, biceps, quads, calves) and a V-taper sleeveless torso. Equipment uses the same shading: racks with holes, padded benches with legs, and a tower with a weight stack. It stays achromatic, with no outlines and no faces.
 - **Canvas:** 400×300 viewBox on plate; 2px hairline floor at y 266.
 - **Rig:** one skeleton for every pose (torso 64, neck 24, upper arm 36, forearm 32, thigh 46, shin 46, foot 15). Side view or symmetric front view. No faces; hair is a dark sector that rotates with the head.
 - **Depth:** far-side limbs, shorts, shoe and dumbbell use the far greys and sit behind the torso; near limbs are drawn last.
@@ -292,4 +294,9 @@ Ease-out `cubic-bezier(0.23, 1, 0.32, 1)` for state changes; drawer `cubic-bezie
 
 ## Addendum: how-to steps
 
-Exercise detail shows "Cómo se hace" as three steps (Posición, Movimiento, Evita) on a vertical 1px hairline with 9px ring dots, the last ring muted. It reuses the dot-rail grammar vertically; no numbers, no cards.
+Exercise detail shows "Técnica paso a paso" as a collapsible plate (open by default; a closed state is remembered per device). Inside it, in order:
+- **Spec:** a hairline-ruled spec list (Ritmo, Respiración, Dónde lo sientes) with a 104px mute label column.
+- **Steps:** Preparación and Movimiento, each on a vertical 1px hairline with 9px ink ring dots, using the dot-rail grammar vertically.
+- **Errores comunes:** each error in ink, with its correction in mute below it, marked by a 10px straight-line dash.
+
+None of these use numbers or cards.

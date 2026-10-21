@@ -339,7 +339,17 @@ a.row:active .thumb { transform: scale(0.97); }
   background: var(--plate);
   border: 1px solid var(--line);
   overflow: hidden;
-  aspect-ratio: 4 / 3;
+}
+/* inicio y final lado a lado, mismo encuadre, separados por una línea */
+.duo { display: grid; grid-template-columns: 1fr 1fr; aspect-ratio: 3 / 2; }
+.duo figure { position: relative; margin: 0; min-width: 0; }
+.duo figure + figure { border-left: 1px solid var(--line); }
+.duo figcaption {
+  position: absolute;
+  left: 12px; bottom: 9px;
+  color: var(--mute);
+  font-size: 12px;
+  font-weight: 600;
 }
 .ill-lbl {
   font: 600 10.5px/1 var(--font);
@@ -370,9 +380,20 @@ a.row:active .thumb { transform: scale(0.97); }
 .cue { margin: 16px 0 0; max-width: 65ch; }
 .cue-note { margin: 8px 0 0; color: var(--mute); font-size: 14px; }
 
-/* cómo se hace: pasos sobre una línea vertical de puntos */
+/* técnica: plato plegable con ficha, pasos sobre una línea vertical de puntos y errores */
+.tech__body { padding: 0 16px 18px; }
+.tech h3 { margin: 0 0 12px; font-size: 13px; font-weight: 600; color: var(--mute); }
+.tech__spec { margin: 0; border-top: 1px solid var(--line); }
+.tech__spec div {
+  display: grid;
+  grid-template-columns: 104px 1fr;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.tech__spec dt { color: var(--mute); font-size: 13px; padding-top: 1px; }
+.tech__spec dd { margin: 0; font-size: 15px; }
 .how { margin: 22px 0 0; }
-.how h2 { margin: 0 0 12px; font-size: 13px; font-weight: 600; color: var(--mute); }
 .how ol { list-style: none; margin: 0; padding: 0; position: relative; }
 .how ol::before {
   content: "";
@@ -389,11 +410,21 @@ a.row:active .thumb { transform: scale(0.97); }
   left: 0; top: 6px;
   width: 9px; height: 9px;
   border-radius: 50%;
-  background: var(--bg);
+  background: var(--plate);
   border: 1.5px solid var(--ink);
 }
-.how li:last-child::before { border-color: var(--mute); }
-.how b { display: block; font-size: 13px; font-weight: 600; color: var(--mute); }
+.faults { margin: 22px 0 0; }
+.faults ul { list-style: none; margin: 0; padding: 0; }
+.faults li { position: relative; padding: 0 0 12px 24px; max-width: 65ch; color: var(--mute); }
+.faults li:last-child { padding-bottom: 0; }
+.faults li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 10px;
+  width: 10px; height: 1.5px;
+  background: var(--line-2);
+}
+.faults b { display: block; font-weight: 600; color: var(--ink); }
 
 .last {
   margin: 22px 0 0;

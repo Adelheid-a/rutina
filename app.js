@@ -170,24 +170,8 @@ function renderToday(d) {
   requestAnimationFrame(() => window.scrollTo(0, listScroll));
 }
 
-// recorta cada miniatura al tamaño real de su figura (proporción 88:70)
-const thumbBoxes = {};
-function fitThumbs() {
-  screen.querySelectorAll('svg.ill--thumb').forEach((svg) => {
-    const id = svg.dataset.id;
-    if (!thumbBoxes[id]) {
-      let b;
-      try { b = svg.getBBox(); } catch (e) { return; }
-      if (!b.width) return;
-      const ratio = 88 / 70, pad = 14;
-      let w = b.width + pad * 2, h = b.height + pad * 2;
-      if (w / h > ratio) h = w / ratio; else w = h * ratio;
-      const cx = b.x + b.width / 2, cy = b.y + b.height / 2;
-      thumbBoxes[id] = `${(cx - w / 2).toFixed(1)} ${(cy - h / 2).toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`;
-    }
-    svg.setAttribute('viewBox', thumbBoxes[id]);
-  });
-}
+// recorta cada figura al tamaño real de su dibujo (ver fitFigures en illus.js)
+const fitThumbs = () => fitFigures(screen);
 
 // fin de semana: un punto por día de entrenamiento de esta semana, lleno si entrenaste
 function weekDots() {
@@ -241,7 +225,7 @@ function renderExercise(d, i) {
       <a class="back" href="#/hoy/${d}">${ICON.back}${DAY_NAMES[d]}</a>
       <span class="counter">${i + 1} de ${day.items.length}</span>
     </div>
-    <div class="hero">${illustration(illOf(it.ex), ex.name)}</div>
+    <div class="hero">${illustrationDuo(illOf(it.ex), ex.name)}</div>
     <h1 class="ex-title">${ex.name}</h1>
     ${ex.alt ? `<p class="ex-alt">${ex.alt}</p>` : ''}
     <dl class="rx">
@@ -251,8 +235,7 @@ function renderExercise(d, i) {
     </dl>
     <p class="cue">${it.cue || ex.cue}</p>
     ${it.note ? `<p class="cue-note">${it.note}</p>` : ''}
-    ${ex.how && ex.how.length ? `<section class="how"><h2>Cómo se hace</h2><ol>${ex.how.map((t, n) =>
-      `<li><b>${['Posición', 'Movimiento', 'Evita'][n]}</b>${t}</li>`).join('')}</ol></section>` : ''}
+    ${techBlock(ex)}
     ${state.extra && it.extra ? '<p class="cue-note">Incluye la serie extra de la semana 5+.</p>' : ''}`;
 
   if (last) {
@@ -296,11 +279,39 @@ function renderExercise(d, i) {
       `<li><span>${fmtDate(p.date)}</span><span>${fmtSets(p.sets, it)}</span></li>`).join('')}</ol></section>`;
   }
   paint(html, 'view view--push');
+  fitThumbs();
   screen.dataset.d = d;
   screen.dataset.i = i;
   window.scrollTo(0, 0);
   if (doneToday > 0) requestAnimationFrame(() => revealNextSet('auto'));
 }
+
+// técnica completa; abierta por defecto, recuerda si la cierras
+const TECH_KEY = 'rutina.tech';
+function techBlock(ex) {
+  const h = ex.how;
+  if (!h || !h.move) return '';
+  let open = true;
+  try { open = localStorage.getItem(TECH_KEY) !== 'closed'; } catch (e) { /* sin storage */ }
+  const steps = (title, list) => `<section class="how"><h3>${title}</h3><ol>${list.map((t) => `<li>${t}</li>`).join('')}</ol></section>`;
+  return `<details class="note tech"${open ? ' open' : ''}>
+      <summary>Técnica paso a paso ${ICON.chevron}</summary>
+      <div class="tech__body">
+        <dl class="tech__spec">
+          <div><dt>Ritmo</dt><dd>${h.tempo}</dd></div>
+          <div><dt>Respiración</dt><dd>${h.breath || BREATH}</dd></div>
+          <div><dt>Dónde lo sientes</dt><dd>${h.feel}</dd></div>
+        </dl>
+        ${steps('Preparación', h.setup)}
+        ${steps('Movimiento', h.move)}
+        <section class="faults"><h3>Errores comunes</h3><ul>${h.errors.map(([e, f]) => `<li><b>${e}</b>${f}</li>`).join('')}</ul></section>
+      </div>
+    </details>`;
+}
+document.addEventListener('toggle', (e) => {
+  if (!e.target.classList || !e.target.classList.contains('tech')) return;
+  try { localStorage.setItem(TECH_KEY, e.target.open ? 'open' : 'closed'); } catch (err) { /* sin storage */ }
+}, true);
 
 function field(name, value, placeholder, mode, k) {
   const label = name === 'w' ? 'Peso' : 'Repeticiones';

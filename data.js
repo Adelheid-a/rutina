@@ -4,306 +4,771 @@
 // load (en EXERCISES): 'none' = sin peso; por defecto kg.
 // ill (en EXERCISES): reutiliza la ilustración de otro ejercicio.
 // cue: técnica corta (en el ítem, la propia de ese día; si no hay, la del ejercicio).
-// how: descripción en tres pasos [posición, movimiento, error que evitar].
+// how: técnica completa
+//   setup: preparación paso a paso; move: el movimiento paso a paso;
+//   tempo: ritmo de la repetición; breath: respiración (si falta, se usa BREATH);
+//   feel: dónde se debe sentir; errors: [error, corrección].
 // rest: texto de descanso; restSec: segundos que corre el temporizador.
 // extra: true → suma 1 serie cuando "Volumen extra" está activo (semana 5+).
+
+const BREATH = 'Suelta el aire en el esfuerzo y toma aire al regresar.';
 
 const EXERCISES = {
   // ---- pecho
   press_inclinado_barra: {
     name: 'Press inclinado con barra', alt: 'banco a 30°, o en multipower', muscle: 'Pecho superior',
     cue: 'Baja la barra a la parte alta del pecho, con control.',
-    how: [
-      'Banco a unos 30°, ojos bajo la barra, agarre un poco más ancho que los hombros y omóplatos juntos.',
-      'Baja la barra hasta rozar la parte alta del pecho y empuja hacia arriba hasta casi estirar los brazos.',
-      'Rebotar la barra en el pecho o despegar la cadera del banco. Usa los seguros del rack.',
-    ],
+    how: {
+      setup: [
+        'Banco a unos 30°. Más inclinado trabaja más el hombro que el pecho.',
+        'Acuéstate con los ojos justo debajo de la barra y los pies firmes en el suelo.',
+        'Agarre un poco más ancho que los hombros, con las muñecas rectas sobre los antebrazos.',
+        'Junta y baja los omóplatos antes de sacar la barra; mantenlos así toda la serie.',
+      ],
+      move: [
+        'Saca la barra y colócala sobre la parte alta del pecho con los brazos estirados.',
+        'Bájala hasta rozar el pecho justo debajo de la clavícula, con los codos en diagonal (unos 45–60° del torso).',
+        'Empuja hacia arriba hasta casi estirar los brazos, sin despegar los omóplatos del banco.',
+      ],
+      tempo: '2–3 s bajando · empuje firme',
+      breath: 'Toma aire arriba, aguántalo al bajar y suéltalo al pasar la parte difícil del empuje.',
+      feel: 'Parte alta del pecho y frente del hombro. Si lo sientes sobre todo en el hombro, baja la inclinación.',
+      errors: [
+        ['Rebotar la barra en el pecho', 'Baja controlado y toca suave.'],
+        ['Despegar la cadera del banco', 'Glúteos apoyados toda la serie.'],
+        ['Abrir los codos a 90°', 'Codos en diagonal, un poco hacia el cuerpo.'],
+        ['Entrenar sin seguros', 'Pon los seguros del rack a la altura del pecho o usa el multipower.'],
+      ],
+    },
   },
   press_inclinado: {
     name: 'Press inclinado con mancuernas', muscle: 'Pecho superior',
     cue: 'Si hay banco, inclinación de 20–35°. Baja con control.',
-    how: [
-      'Recuéstate en el banco inclinado con una mancuerna en cada mano a la altura del pecho, pies firmes en el suelo.',
-      'Empuja las mancuernas hacia arriba hasta casi estirar los brazos y baja despacio hasta sentir el estiramiento en el pecho.',
-      'Rebotar abajo o abrir los codos a 90°: mantenlos a unos 45° del torso.',
-    ],
+    how: {
+      setup: [
+        'Banco a 20–35°. Siéntate con las mancuernas apoyadas sobre los muslos.',
+        'Recuéstate y súbelas con ayuda de las rodillas hasta la altura del pecho.',
+        'Omóplatos juntos y abajo, pies firmes, palmas hacia los pies o un poco giradas hacia adentro.',
+      ],
+      move: [
+        'Empuja las mancuernas hacia arriba y un poco hacia el centro hasta casi estirar los brazos.',
+        'Baja despacio hasta que queden a los lados del pecho y sientas el estiramiento.',
+        'Al terminar, lleva las mancuernas al pecho y siéntate subiendo las rodillas; no las sueltes de lado.',
+      ],
+      tempo: '2–3 s bajando · empuje firme',
+      feel: 'Parte alta del pecho; el estiramiento abajo es parte del trabajo.',
+      errors: [
+        ['Chocar las mancuernas arriba', 'Detente cuando estén a un palmo de distancia.'],
+        ['Codos a 90° del torso', 'Llévalos a unos 45°.'],
+        ['Recortar la bajada', 'Baja hasta la altura del pecho en cada repetición.'],
+      ],
+    },
   },
-  press_maquina: {
-    name: 'Press de pecho en máquina', muscle: 'Pecho',
-    cue: 'Sin rebotes; mantén los hombros estables.',
-    how: [
-      'Ajusta el asiento para que los agarres queden a la altura del pecho; espalda pegada al respaldo.',
-      'Empuja hacia el frente sin bloquear los codos y regresa controlado hasta que las manos queden junto al pecho.',
-      'Despegar los hombros del respaldo o encogerlos hacia las orejas.',
-    ],
+  press_plano: {
+    name: 'Press plano con mancuernas', muscle: 'Pecho',
+    cue: 'Baja con control hasta sentir el estiramiento del pecho.',
+    how: {
+      setup: [
+        'Banco plano. Siéntate en la punta con las mancuernas apoyadas sobre los muslos.',
+        'Recuéstate y súbelas con ayuda de las rodillas hasta la altura del pecho.',
+        'Omóplatos juntos y abajo, pies firmes en el suelo.',
+      ],
+      move: [
+        'Empuja las mancuernas hacia arriba hasta casi estirar los brazos, sobre la mitad del pecho.',
+        'Baja despacio hasta que queden a los lados del pecho, con los codos a unos 45° del torso.',
+        'Al terminar, lleva las mancuernas al pecho y siéntate subiendo las rodillas; no las sueltes de lado.',
+      ],
+      tempo: '2–3 s bajando · empuje firme',
+      feel: 'Pecho y tríceps; el estiramiento abajo es parte del trabajo.',
+      errors: [
+        ['Chocar las mancuernas arriba', 'Detente cuando estén a un palmo de distancia.'],
+        ['Abrir los codos a 90°', 'Llévalos a unos 45°.'],
+        ['Despegar la cadera o los omóplatos', 'Glúteos y espalda alta apoyados en el banco.'],
+      ],
+    },
   },
   apertura_baja: {
-    name: 'Apertura en polea baja', alt: 'de abajo hacia arriba', muscle: 'Pecho superior',
-    cue: 'Sube en arco hasta la altura del pecho; codos fijos.',
-    how: [
-      'Polea en la posición más baja con agarre de mano. Con dos poleas, una en cada mano; con una, un brazo a la vez.',
-      'Con el codo un poco flexionado, sube la mano en arco hacia el centro hasta la altura de la clavícula; baja despacio.',
-      'Doblar y estirar el codo: se vuelve un press y deja de trabajar el pecho.',
-    ],
+    name: 'Apertura en polea baja', alt: 'un brazo a la vez, de abajo hacia arriba', muscle: 'Pecho superior',
+    cue: 'Sube en arco hasta la altura del pecho; codo fijo.',
+    how: {
+      setup: [
+        'Polea ajustable en la posición más baja, con agarre de mano.',
+        'Párate de lado a la polea y toma el agarre con la mano más cercana; da un paso hacia afuera para que el cable tenga tensión abajo.',
+        'Pecho arriba y codo un poco flexionado; la otra mano en la cintura o sosteniéndote de la torre.',
+      ],
+      move: [
+        'Empieza con la mano abajo, junto a la cadera, palma al frente.',
+        'Sube la mano en arco hacia el centro del cuerpo hasta la altura de la clavícula.',
+        'Pausa un segundo y regresa por el mismo arco hasta sentir el estiramiento.',
+        'Termina todas las repeticiones y cambia de lado.',
+      ],
+      tempo: '1 s subiendo · 1 s arriba · 2 s bajando',
+      feel: 'Parte alta del pecho, cerca de la clavícula.',
+      errors: [
+        ['Doblar y estirar el codo', 'El ángulo del codo no cambia; si cambia, se vuelve un press.'],
+        ['Subir por encima de la cara', 'Detente a la altura de la clavícula.'],
+        ['Girar el torso hacia la polea', 'Pecho al frente; solo se mueve el brazo.'],
+      ],
+    },
   },
   cruce_poleas: {
-    name: 'Apertura en polea media', alt: 'cruce de poleas', muscle: 'Pecho',
-    cue: 'Codos fijos y algo flexionados; junta las manos frente al pecho.',
-    how: [
-      'Polea a la altura del pecho con agarre de mano. Con dos poleas, una en cada mano; con una, un brazo a la vez.',
-      'Lleva la mano en arco hacia el centro hasta quedar frente al pecho; pausa y abre despacio hasta sentir el estiramiento.',
-      'Doblar y estirar los codos: el ángulo del codo no cambia.',
-    ],
+    name: 'Apertura en polea media', alt: 'un brazo a la vez', muscle: 'Pecho',
+    cue: 'Codo fijo y algo flexionado; lleva la mano al centro del pecho.',
+    how: {
+      setup: [
+        'Polea a la altura del pecho, con agarre de mano.',
+        'Párate de lado a la polea, toma el agarre con la mano más cercana y da un paso hacia afuera con un pie adelante.',
+        'Codo ligeramente flexionado y fijo; la otra mano en la cintura.',
+      ],
+      move: [
+        'Empieza con el brazo abierto hacia la polea, a la altura del hombro, sintiendo el estiramiento del pecho.',
+        'Lleva la mano en arco hasta quedar frente al centro del pecho.',
+        'Aprieta un segundo y abre despacio hasta volver al estiramiento.',
+        'Termina todas las repeticiones y cambia de lado.',
+      ],
+      tempo: '1 s cerrando · 1 s pausa · 2 s abriendo',
+      feel: 'Centro y parte media del pecho.',
+      errors: [
+        ['Doblar y estirar el codo', 'El brazo es un arco fijo.'],
+        ['Girar el torso para ayudarte', 'Pecho al frente; solo se mueve el brazo.'],
+        ['Abrir de golpe', 'La vuelta dura el doble que la ida.'],
+      ],
+    },
   },
 
   // ---- espalda
   jalon: {
     name: 'Jalón al pecho', alt: 'barra larga, agarre ancho', muscle: 'Dorsal ancho',
     cue: 'Lleva la barra al pecho; nunca detrás del cuello.',
-    how: [
-      'Siéntate en la estación de jalón con los muslos bajo los rodillos; toma la barra larga un poco más ancho que los hombros.',
-      'Jala la barra hacia la parte alta del pecho llevando los codos hacia abajo; sube controlando hasta estirar los brazos.',
-      'Echarte muy atrás o jalar con los brazos en lugar de con la espalda.',
-    ],
+    how: {
+      setup: [
+        'Ajusta el rodillo para que los muslos queden firmes debajo.',
+        'Toma la barra larga un poco más ancho que los hombros, palmas al frente.',
+        'Siéntate con el pecho arriba y el torso apenas inclinado hacia atrás.',
+      ],
+      move: [
+        'Empieza con los brazos estirados y deja que los hombros suban para estirar la espalda.',
+        'Baja primero los hombros y luego jala llevando los codos hacia abajo y hacia los costados.',
+        'Lleva la barra a la parte alta del pecho y sube despacio hasta estirar los brazos por completo.',
+      ],
+      tempo: '1 s jalando · 2–3 s subiendo',
+      feel: 'Costados de la espalda, debajo de las axilas. Si lo sientes sobre todo en los brazos, piensa en jalar con los codos.',
+      errors: [
+        ['Echarte muy atrás para jalar', 'Torso casi quieto, solo una leve inclinación.'],
+        ['Llevar la barra detrás del cuello', 'Siempre al frente, hacia el pecho.'],
+        ['Subir a medias', 'Estira los brazos arriba en cada repetición.'],
+      ],
+    },
   },
   jalon_cerrado: {
     ill: 'jalon',
     name: 'Jalón agarre cerrado', alt: 'agarre en V o palmas enfrentadas', muscle: 'Dorsal ancho',
     cue: 'Codos pegados al cuerpo; estira arriba por completo.',
-    how: [
-      'En la estación de jalón cambia la barra por el agarre en V (o toma la barra con las manos juntas).',
-      'Jala hacia el pecho llevando los codos hacia las costillas; sube despacio hasta sentir el estiramiento del dorsal.',
-      'Subir a medias: el estiramiento de arriba es parte del ejercicio.',
-    ],
+    how: {
+      setup: [
+        'En la estación de jalón cambia la barra por el agarre en V (o toma la barra con las manos juntas).',
+        'Muslos bajo el rodillo, pecho arriba y torso un poco inclinado hacia atrás.',
+      ],
+      move: [
+        'Empieza con los brazos estirados y los hombros arriba para estirar la espalda.',
+        'Jala llevando los codos pegados hacia las costillas hasta que el agarre llegue a la parte alta del pecho.',
+        'Sube despacio hasta estirar por completo.',
+      ],
+      tempo: '1 s jalando · 2–3 s subiendo',
+      feel: 'Parte baja y lateral de la espalda.',
+      errors: [
+        ['Subir a medias', 'El estiramiento de arriba es parte del ejercicio.'],
+        ['Abrir los codos', 'Pegados al cuerpo, apuntando al suelo.'],
+        ['Columpiar el torso', 'Si necesitas balancearte, baja el peso.'],
+      ],
+    },
   },
   remo_barra: {
     name: 'Remo con barra', muscle: 'Espalda media · dorsal',
     cue: 'Torso inclinado y quieto; lleva la barra al ombligo.',
-    how: [
-      'De pie con la barra, rodillas algo flexionadas y la cadera atrás hasta dejar el torso a unos 45°, espalda recta.',
-      'Jala la barra hacia el ombligo llevando los codos atrás; baja hasta estirar los brazos sin mover el torso.',
-      'Enderezarte para subir el peso o redondear la espalda.',
-    ],
+    how: {
+      setup: [
+        'Toma la barra un poco más ancho que los hombros, palmas hacia ti.',
+        'De pie, pies al ancho de la cadera y rodillas algo flexionadas.',
+        'Lleva la cadera hacia atrás hasta dejar el torso a unos 45°, espalda recta y abdomen firme.',
+      ],
+      move: [
+        'Deja la barra colgando con los brazos estirados, debajo de los hombros.',
+        'Jálala hacia el ombligo llevando los codos atrás, cerca del cuerpo, y junta los omóplatos.',
+        'Baja despacio hasta estirar los brazos sin cambiar la inclinación del torso.',
+      ],
+      tempo: '1 s jalando · 2 s bajando',
+      breath: 'Abdomen firme toda la serie; suelta el aire al jalar.',
+      feel: 'Parte media de la espalda y dorsales. La espalda baja trabaja para sostenerte, pero no debe doler.',
+      errors: [
+        ['Enderezarte para subir el peso', 'El torso se queda en el mismo ángulo.'],
+        ['Redondear la espalda', 'Pecho arriba; si no puedes, baja el peso.'],
+        ['Jalar hacia el pecho', 'La barra va al ombligo.'],
+      ],
+    },
   },
   remo_sentado: {
     name: 'Remo sentado en polea baja', alt: 'agarre en V', muscle: 'Espalda media',
     cue: 'No balancees el torso; guía el movimiento con los codos.',
-    how: [
-      'En la estación de remo bajo, pies en el apoyo, rodillas un poco flexionadas y espalda recta.',
-      'Jala el agarre hacia el abdomen llevando los codos atrás y juntando los omóplatos; regresa estirando los brazos.',
-      'Mecer el torso hacia adelante y atrás para mover el peso.',
-    ],
+    how: {
+      setup: [
+        'En la estación de remo bajo, pon el agarre en V.',
+        'Siéntate con los pies en el apoyo y las rodillas un poco flexionadas.',
+        'Toma el agarre y siéntate derecho: espalda recta y pecho arriba.',
+      ],
+      move: [
+        'Empieza con los brazos estirados y deja que los hombros se vayan un poco al frente.',
+        'Jala el agarre hacia el abdomen llevando los codos atrás y juntando los omóplatos.',
+        'Regresa estirando los brazos despacio, sin que el torso se vaya hacia adelante.',
+      ],
+      tempo: '1 s jalando · 1 s pausa · 2 s regresando',
+      feel: 'Centro de la espalda, entre los omóplatos.',
+      errors: [
+        ['Mecer el torso', 'El torso se queda vertical; se mueven brazos y omóplatos.'],
+        ['Encoger los hombros', 'Hombros abajo al jalar.'],
+        ['Soltar el peso al regresar', 'Controla la vuelta.'],
+      ],
+    },
   },
   remo_polea_una: {
     ill: 'remo_sentado',
     name: 'Remo a una mano en polea baja', muscle: 'Dorsal ancho',
     cue: 'Lleva el codo hacia la cadera; estira por completo al regresar.',
-    how: [
-      'En la estación de remo bajo con agarre de una mano; siéntate derecho con el otro brazo apoyado en el muslo.',
-      'Jala llevando el codo hacia la cadera y regresa dejando que el hombro se estire hacia el frente.',
-      'Girar el torso para mover más peso.',
-    ],
+    how: {
+      setup: [
+        'En la estación de remo bajo, pon el agarre de una mano.',
+        'Siéntate derecho con los pies en el apoyo; el brazo libre descansa sobre el muslo.',
+      ],
+      move: [
+        'Empieza con el brazo estirado y deja que el hombro se vaya al frente para estirar la espalda.',
+        'Jala llevando el codo pegado al cuerpo hacia la cadera, no hacia el techo.',
+        'Regresa despacio hasta estirar el brazo por completo.',
+        'Haz todas las repeticiones de un lado y luego cambia.',
+      ],
+      tempo: '1 s jalando · 2 s regresando',
+      feel: 'Costado de la espalda del lado que jala, de la axila a la cintura.',
+      errors: [
+        ['Girar el torso para mover más', 'Pecho al frente; solo se mueve el brazo.'],
+        ['Jalar hacia el pecho', 'El codo va hacia la cadera.'],
+        ['Recortar la vuelta', 'Estira brazo y hombro en cada repetición.'],
+      ],
+    },
   },
   pullover_polea: {
     name: 'Pullover en polea alta', alt: 'brazos rectos, barra o cuerda', muscle: 'Dorsal ancho',
     cue: 'Brazos casi rectos; el movimiento sale del hombro.',
-    how: [
-      'De frente a la polea alta (estación de jalón o polea ajustable arriba), un paso atrás y el torso algo inclinado.',
-      'Con los brazos casi rectos, baja el agarre en arco hasta los muslos; sube despacio hasta la altura de la cabeza.',
-      'Doblar los codos: se convierte en extensión de tríceps.',
-    ],
+    how: {
+      setup: [
+        'Polea alta (estación de jalón o polea ajustable arriba) con barra recta o cuerda.',
+        'Da uno o dos pasos atrás, pies al ancho de la cadera y rodillas suaves.',
+        'Inclina el torso al frente unos 30° con la espalda recta y los brazos casi rectos.',
+      ],
+      move: [
+        'Empieza con los brazos arriba, a la altura de la cabeza, sintiendo el estiramiento en los costados.',
+        'Baja el agarre en arco hasta los muslos sin doblar los codos.',
+        'Aprieta un segundo y sube despacio por el mismo arco.',
+      ],
+      tempo: '1 s bajando · 1 s pausa · 2 s subiendo',
+      feel: 'Costados de la espalda.',
+      errors: [
+        ['Doblar los codos', 'Si se doblan, trabaja el tríceps en lugar de la espalda.'],
+        ['Mover el torso para ayudarte', 'El torso se queda quieto.'],
+        ['Subir solo hasta la mitad', 'Sube hasta la altura de la cabeza.'],
+      ],
+    },
   },
   face_pull: {
     name: 'Face pull en polea media', alt: 'con cuerda', muscle: 'Deltoide posterior',
     cue: 'Polea a la altura de la cara; pausa de un segundo.',
-    how: [
-      'Polea ajustable a la altura de la cara con cuerda; toma un extremo en cada mano y da un paso atrás.',
-      'Jala la cuerda hacia la frente abriendo los codos hacia los lados y arriba; pausa y regresa.',
-      'Jalar hacia el pecho o echarte hacia atrás.',
-    ],
+    how: {
+      setup: [
+        'Polea ajustable a la altura de la cara, con cuerda.',
+        'Toma un extremo en cada mano y da un paso atrás.',
+        'Pies al ancho de la cadera o uno adelante, torso derecho.',
+      ],
+      move: [
+        'Jala la cuerda hacia la frente separando las manos.',
+        'Lleva los codos hacia los lados y arriba, a la altura de los hombros.',
+        'Pausa un segundo y regresa despacio.',
+      ],
+      tempo: '1 s jalando · 1 s pausa · 2 s regresando',
+      feel: 'Parte de atrás del hombro y entre los omóplatos.',
+      errors: [
+        ['Jalar hacia el pecho', 'La cuerda va hacia la frente.'],
+        ['Echarte hacia atrás', 'Usa un peso que muevas sin balancearte.'],
+        ['Bajar los codos', 'Codos a la altura de los hombros.'],
+      ],
+    },
   },
 
   // ---- hombros
   press_hombro: {
     name: 'Press de hombro sentado', alt: 'en máquina o con mancuernas', muscle: 'Deltoides',
     cue: 'Solo si no causa dolor; no fuerces el rango.',
-    how: [
-      'Sentado con la espalda apoyada; agarres o mancuernas a la altura de los hombros.',
-      'Empuja hacia arriba sin bloquear los codos y baja hasta que las manos queden a la altura de las orejas.',
-      'Arquear la espalda baja para empujar más peso.',
-    ],
+    how: {
+      setup: [
+        'En máquina, ajusta el asiento para que los agarres queden a la altura de los hombros. Con mancuernas, banco casi vertical.',
+        'Espalda apoyada y pies firmes en el suelo.',
+        'Antebrazos verticales, codos un poco al frente del cuerpo.',
+      ],
+      move: [
+        'Empuja hacia arriba hasta casi estirar los brazos, sin bloquear los codos.',
+        'Baja despacio hasta que las manos queden a la altura de las orejas o un poco más abajo.',
+      ],
+      tempo: 'Empuje firme · 2 s bajando',
+      feel: 'Frente y lado del hombro.',
+      errors: [
+        ['Arquear la espalda baja', 'Glúteos y espalda pegados al respaldo.'],
+        ['Forzar el rango', 'Baja solo hasta donde no duela.'],
+        ['Bloquear los codos arriba', 'Deja una pequeña flexión.'],
+      ],
+    },
   },
   elev_laterales: {
     name: 'Elevaciones laterales', alt: 'con mancuernas', muscle: 'Deltoide lateral',
     cue: 'Codos algo flexionados; evita balancearte.',
-    how: [
-      'De pie, mancuernas a los costados y los codos un poco flexionados.',
-      'Sube los brazos hacia los lados hasta la altura de los hombros y baja despacio.',
-      'Subir de más o con impulso; el trapecio no debe hacer el trabajo.',
-    ],
+    how: {
+      setup: [
+        'De pie, pies al ancho de la cadera, una mancuerna en cada mano a los costados.',
+        'Codos un poco flexionados y torso ligeramente inclinado al frente.',
+      ],
+      move: [
+        'Sube los brazos hacia los lados guiando con los codos, hasta la altura de los hombros.',
+        'Las manos no suben más que los codos.',
+        'Baja despacio hasta casi tocar los muslos.',
+      ],
+      tempo: '1 s subiendo · 2–3 s bajando',
+      feel: 'Parte lateral del hombro. Si se cansa más el cuello, baja el peso.',
+      errors: [
+        ['Balancearte para subir', 'Peso más ligero y cuerpo quieto.'],
+        ['Subir por encima de los hombros', 'Detente a la altura del hombro.'],
+        ['Encoger el cuello', 'Hombros abajo, lejos de las orejas.'],
+      ],
+    },
   },
   lat_polea: {
     name: 'Elevación lateral en polea baja', alt: 'un brazo a la vez', muscle: 'Deltoide lateral',
     cue: 'Empieza con la mano cruzada frente a la cadera; sube hasta el hombro.',
-    how: [
-      'Polea ajustable abajo, agarre de mano. Párate de lado y toma el agarre con la mano lejana, cruzando frente al cuerpo.',
-      'Sube el brazo hacia el costado hasta la altura del hombro, codo un poco flexionado; baja controlado hasta cruzar otra vez.',
-      'Subir con impulso del cuerpo o encoger el trapecio.',
-    ],
+    how: {
+      setup: [
+        'Polea ajustable en la posición más baja, con agarre de mano.',
+        'Párate de lado a la polea y toma el agarre con la mano más lejana; el cable cruza frente a tu cadera.',
+        'Con la otra mano sostente de la torre para que el torso no se mueva.',
+      ],
+      move: [
+        'Empieza con la mano frente a la cadera contraria.',
+        'Sube el brazo hacia el costado, codo un poco flexionado, hasta la altura del hombro.',
+        'Baja despacio hasta volver a cruzar frente al cuerpo.',
+        'Termina todas las repeticiones y cambia de lado.',
+      ],
+      tempo: '1 s subiendo · 2–3 s bajando',
+      feel: 'Parte lateral del hombro, también al inicio del recorrido.',
+      errors: [
+        ['Inclinarte para ayudarte', 'Sostente de la torre y quédate vertical.'],
+        ['Encoger el trapecio', 'Hombro abajo.'],
+        ['Usar mucho peso', 'Funciona con poco peso y control.'],
+      ],
+    },
   },
   pajaro_polea: {
-    name: 'Pájaro en polea media', alt: 'cruzado, o un brazo a la vez', muscle: 'Deltoide posterior',
-    cue: 'Brazos casi rectos; abre hacia atrás sin encoger los hombros.',
-    how: [
-      'Polea a la altura del hombro con agarre de mano (o solo el cable). Con dos poleas, toma cada cable con la mano contraria.',
-      'Abre los brazos hacia los lados y atrás hasta quedar en línea con los hombros; regresa despacio cruzando frente al pecho.',
-      'Jalar con los codos doblados o echar el torso hacia atrás.',
-    ],
+    name: 'Pájaro en polea media', alt: 'un brazo a la vez', muscle: 'Deltoide posterior',
+    cue: 'Brazo casi recto; abre hacia atrás sin encoger el hombro.',
+    how: {
+      setup: [
+        'Polea a la altura del hombro, con agarre de mano o tomando solo el cable.',
+        'Párate de lado a la polea y toma el agarre con la mano más lejana; el cable cruza frente a tu pecho.',
+        'Brazo al frente a la altura del hombro, codo un poco flexionado; la otra mano en la cintura.',
+      ],
+      move: [
+        'Abre el brazo hacia el costado y atrás hasta que quede en línea con los hombros.',
+        'Pausa un segundo.',
+        'Regresa despacio hasta que la mano cruce frente al pecho.',
+        'Termina todas las repeticiones y cambia de lado.',
+      ],
+      tempo: '1 s abriendo · 1 s pausa · 2 s cerrando',
+      feel: 'Parte de atrás del hombro.',
+      errors: [
+        ['Jalar doblando el codo', 'Brazo casi recto todo el tiempo.'],
+        ['Girar el torso', 'Pecho al frente; solo se mueve el brazo.'],
+        ['Encoger los hombros', 'Hombros abajo, cuello largo.'],
+      ],
+    },
   },
 
   // ---- brazos
   ext_triceps: {
     name: 'Tríceps con cuerda en polea alta', muscle: 'Tríceps',
     cue: 'Codos pegados al torso.',
-    how: [
-      'De frente a la polea alta con cuerda, codos pegados a los costados.',
-      'Empuja hacia abajo hasta estirar los brazos y separa un poco la cuerda al final; sube hasta que el antebrazo quede horizontal.',
-      'Que los codos se muevan hacia adelante o inclinarte para usar el peso del cuerpo.',
-    ],
+    how: {
+      setup: [
+        'Polea alta con cuerda.',
+        'De frente a la polea, pies al ancho de la cadera y el torso un poco inclinado al frente.',
+        'Codos pegados a los costados.',
+      ],
+      move: [
+        'Empieza con los antebrazos horizontales.',
+        'Empuja hacia abajo hasta estirar los brazos y separa los extremos de la cuerda al final.',
+        'Aprieta un segundo y sube despacio sin mover los codos.',
+      ],
+      tempo: '1 s empujando · 1 s pausa · 2 s subiendo',
+      feel: 'Parte de atrás del brazo.',
+      errors: [
+        ['Que los codos se muevan', 'Codos fijos a los costados.'],
+        ['Usar el peso del cuerpo', 'Si te recargas sobre la cuerda, baja el peso.'],
+        ['Subir las manos hasta la cara', 'Para cuando el antebrazo quede horizontal.'],
+      ],
+    },
   },
   ext_sobre_cabeza: {
     name: 'Extensión de tríceps sobre la cabeza', alt: 'en polea con cuerda', muscle: 'Tríceps',
     cue: 'Codos apuntando al frente y quietos; estira por completo.',
-    how: [
-      'De espaldas a la polea, cuerda detrás de la cabeza, un pie adelante y el torso algo inclinado.',
-      'Estira los brazos hacia el frente y arriba; regresa doblando solo los codos hasta sentir el estiramiento.',
-      'Abrir los codos hacia los lados o arquear la espalda baja.',
-    ],
+    how: {
+      setup: [
+        'Polea a la altura de la cadera o un poco más abajo, con cuerda.',
+        'Toma la cuerda, gira de espaldas a la polea y llévala detrás de la cabeza.',
+        'Da un paso al frente con un pie adelante y el torso un poco inclinado; codos al frente, junto a la cabeza.',
+      ],
+      move: [
+        'Empieza con los codos doblados y las manos detrás de la cabeza, sintiendo el estiramiento.',
+        'Estira los brazos hacia el frente y arriba sin mover los codos.',
+        'Regresa despacio doblando solo los codos hasta el estiramiento completo.',
+      ],
+      tempo: '1 s estirando · 2–3 s regresando',
+      feel: 'Parte de atrás del brazo, sobre todo cerca del hombro.',
+      errors: [
+        ['Abrir los codos hacia los lados', 'Codos al frente, al ancho de los hombros.'],
+        ['Arquear la espalda baja', 'Abdomen firme y un pie adelante.'],
+        ['Recortar el regreso', 'El estiramiento atrás es lo que hace funcionar este ejercicio.'],
+      ],
+    },
   },
   press_frances: {
     name: 'Press francés con barra', alt: 'barra Z si hay', muscle: 'Tríceps',
     cue: 'Solo se mueven los codos; baja la barra detrás de la frente.',
-    how: [
-      'Acostado en banco plano, barra arriba con los brazos estirados y un poco inclinados hacia la cabeza.',
-      'Dobla los codos y baja la barra hacia atrás de la frente; estira de vuelta sin mover los hombros.',
-      'Abrir los codos hacia los lados o bajar la barra a la cara.',
-    ],
+    how: {
+      setup: [
+        'Acostado en banco plano con la barra (barra Z si hay), agarre al ancho de los hombros.',
+        'Brazos estirados sobre el pecho y luego un poco inclinados hacia la cabeza.',
+        'Pies firmes en el suelo.',
+      ],
+      move: [
+        'Dobla solo los codos y baja la barra hacia atrás de la frente.',
+        'Cuando sientas el estiramiento en la parte de atrás del brazo, estira de vuelta.',
+        'Los brazos no cambian de ángulo; solo se mueven los antebrazos.',
+      ],
+      tempo: '2–3 s bajando · 1 s subiendo',
+      feel: 'Parte de atrás del brazo.',
+      errors: [
+        ['Abrir los codos', 'Codos al ancho de los hombros, apuntando atrás.'],
+        ['Bajar la barra hacia la cara', 'Hacia atrás de la frente.'],
+        ['Dolor en los codos', 'Baja el peso y quédate en la parte alta del rango de repeticiones.'],
+      ],
+    },
   },
   curl_barra: {
     name: 'Curl con barra', muscle: 'Bíceps',
     cue: 'Codos quietos; baja lentamente.',
-    how: [
-      'De pie, barra con agarre al ancho de los hombros y palmas al frente, codos pegados al cuerpo.',
-      'Sube doblando solo los codos hasta la altura del pecho; baja en 2–3 segundos hasta estirar.',
-      'Balancear la cadera o adelantar los codos.',
-    ],
+    how: {
+      setup: [
+        'De pie, pies al ancho de la cadera.',
+        'Barra con agarre al ancho de los hombros, palmas al frente.',
+        'Codos pegados a los costados y hombros atrás.',
+      ],
+      move: [
+        'Sube la barra doblando solo los codos hasta la altura del pecho.',
+        'Aprieta un segundo arriba.',
+        'Baja en 2–3 segundos hasta estirar los brazos por completo.',
+      ],
+      tempo: '1 s subiendo · 2–3 s bajando',
+      feel: 'Frente del brazo.',
+      errors: [
+        ['Balancear la cadera', 'Rodillas suaves y abdomen firme; si te balanceas, baja el peso.'],
+        ['Adelantar los codos', 'Se quedan a los costados.'],
+        ['No estirar abajo', 'Estira por completo en cada repetición.'],
+      ],
+    },
   },
   curl_cuerda: {
     ill: 'curl_polea',
     name: 'Curl martillo con cuerda', alt: 'polea baja', muscle: 'Bíceps · antebrazo',
     cue: 'Muñecas neutras y movimiento controlado.',
-    how: [
-      'De frente a la polea baja con cuerda, palmas enfrentadas y codos pegados.',
-      'Sube sin girar las muñecas hasta el pecho y baja despacio.',
-      'Usar impulso o despegar los codos del cuerpo.',
-    ],
+    how: {
+      setup: [
+        'Polea baja con cuerda.',
+        'De frente a la polea, un paso atrás, palmas enfrentadas.',
+        'Codos pegados a los costados.',
+      ],
+      move: [
+        'Sube la cuerda doblando solo los codos hasta la altura del pecho, sin girar las muñecas.',
+        'Pausa un segundo arriba.',
+        'Baja despacio hasta estirar.',
+      ],
+      tempo: '1 s subiendo · 1 s pausa · 2 s bajando',
+      feel: 'Frente del brazo y parte de arriba del antebrazo.',
+      errors: [
+        ['Usar impulso', 'Cuerpo quieto.'],
+        ['Despegar los codos', 'Codos a los costados.'],
+        ['Doblar las muñecas', 'Muñecas rectas, en línea con el antebrazo.'],
+      ],
+    },
   },
   curl_polea: {
     name: 'Curl en polea baja', alt: 'barra recta', muscle: 'Bíceps',
     cue: 'Codos quietos; aprieta arriba un segundo.',
-    how: [
-      'De frente a la polea baja (estación de remo o polea ajustable abajo) con barra corta, codos pegados.',
-      'Sube doblando solo el codo hasta el pecho; baja controlado hasta estirar el brazo.',
-      'Inclinarte hacia atrás para subir más peso.',
-    ],
+    how: {
+      setup: [
+        'Polea baja (estación de remo o polea ajustable abajo) con barra corta.',
+        'De frente a la polea, un paso atrás para que el cable tenga tensión abajo.',
+        'Agarre al ancho de los hombros, palmas arriba y codos pegados.',
+      ],
+      move: [
+        'Sube doblando solo los codos hasta la altura del pecho.',
+        'Aprieta un segundo arriba.',
+        'Baja controlado hasta estirar los brazos.',
+      ],
+      tempo: '1 s subiendo · 1 s pausa · 2–3 s bajando',
+      feel: 'Frente del brazo.',
+      errors: [
+        ['Inclinarte hacia atrás', 'Torso quieto; si no puedes, baja el peso.'],
+        ['Adelantar los codos', 'Fijos a los costados.'],
+        ['Soltar la bajada', 'Bájala en 2–3 segundos.'],
+      ],
+    },
   },
   curl_inclinado: {
     name: 'Curl inclinado con mancuernas', muscle: 'Bíceps',
     cue: 'Baja lentamente para controlar la repetición.',
-    how: [
-      'Banco a unos 45°, espalda apoyada y los brazos colgando detrás de la línea del cuerpo.',
-      'Sube las mancuernas sin adelantar los codos y baja hasta estirar por completo.',
-      'Despegar la espalda del banco o recortar la bajada.',
-    ],
+    how: {
+      setup: [
+        'Banco a unos 45°.',
+        'Siéntate con la espalda y la cabeza apoyadas y una mancuerna en cada mano.',
+        'Deja colgar los brazos estirados por detrás de la línea del cuerpo, palmas al frente.',
+      ],
+      move: [
+        'Sube las mancuernas doblando solo los codos, sin adelantarlos.',
+        'Aprieta un segundo arriba.',
+        'Baja despacio hasta estirar el brazo por completo.',
+      ],
+      tempo: '1 s subiendo · 3 s bajando',
+      feel: 'Frente del brazo, con un estiramiento fuerte abajo.',
+      errors: [
+        ['Despegar la espalda del banco', 'Espalda y hombros apoyados.'],
+        ['Adelantar los codos al subir', 'Los codos apuntan al suelo.'],
+        ['Recortar la bajada', 'Estira por completo.'],
+      ],
+    },
   },
 
   // ---- pierna
   prensa: {
     name: 'Prensa de pierna', muscle: 'Cuádriceps · glúteo',
     cue: 'Baja hasta 90° de rodilla sin despegar la cadera.',
-    how: [
-      'Espalda y cadera pegadas al respaldo, pies en la plataforma al ancho de los hombros.',
-      'Quita los seguros, baja la plataforma doblando las rodillas hasta unos 90° y empuja con todo el pie.',
-      'Bloquear las rodillas arriba o que la cadera se despegue del asiento abajo.',
-    ],
+    how: {
+      setup: [
+        'Espalda y cadera pegadas al respaldo.',
+        'Pies en el centro de la plataforma, al ancho de los hombros, puntas un poco hacia afuera.',
+        'Empuja la plataforma y quita los seguros.',
+      ],
+      move: [
+        'Baja la plataforma doblando las rodillas hasta unos 90°, con las rodillas en la dirección de las puntas.',
+        'Empuja con todo el pie, sobre todo talón y media planta, hasta casi estirar las piernas.',
+        'Al terminar, pon los seguros antes de soltar.',
+      ],
+      tempo: '2–3 s bajando · empuje firme',
+      feel: 'Frente del muslo y glúteos.',
+      errors: [
+        ['Bloquear las rodillas arriba', 'Deja una pequeña flexión.'],
+        ['Que la cadera se despegue abajo', 'Baja solo hasta donde la cadera siga pegada.'],
+        ['Rodillas hacia adentro', 'Siguen la línea de las puntas.'],
+      ],
+    },
   },
   rdl_barra: {
     name: 'Peso muerto rumano con barra', muscle: 'Isquios · glúteo',
     cue: 'Lleva la cadera atrás y mantén la espalda neutra.',
-    how: [
-      'De pie con la barra frente a los muslos, pies al ancho de la cadera y rodillas un poco flexionadas.',
-      'Lleva la cadera hacia atrás bajando la barra pegada a las piernas hasta media espinilla; sube apretando el glúteo.',
-      'Redondear la espalda o bajar doblando las rodillas como sentadilla.',
-    ],
+    how: {
+      setup: [
+        'Barra en el rack a media altura del muslo; tómala al ancho de los hombros, palmas hacia ti.',
+        'De pie, pies al ancho de la cadera y rodillas un poco flexionadas.',
+        'Pecho arriba, omóplatos atrás y abdomen firme.',
+      ],
+      move: [
+        'Lleva la cadera hacia atrás, como si cerraras una puerta con los glúteos, con la barra pegada a los muslos.',
+        'Baja hasta sentir el estiramiento atrás de las piernas, normalmente entre las rodillas y media espinilla.',
+        'Sube empujando la cadera al frente y apretando los glúteos.',
+      ],
+      tempo: '2–3 s bajando · 1 s subiendo',
+      breath: 'Toma aire y aprieta el abdomen antes de bajar; suéltalo arriba.',
+      feel: 'Parte de atrás del muslo y glúteos. Si lo sientes en la espalda baja, bajaste demasiado o se redondeó.',
+      errors: [
+        ['Redondear la espalda', 'Detente donde la espalda siga recta.'],
+        ['Bajar doblando las rodillas', 'Las rodillas casi no cambian; se mueve la cadera.'],
+        ['Separar la barra de las piernas', 'Pegada a los muslos todo el recorrido.'],
+      ],
+    },
   },
   ext_cuadriceps: {
     name: 'Extensión de cuádriceps', muscle: 'Cuádriceps',
     cue: 'Pausa arriba con la pierna estirada; baja lento.',
-    how: [
-      'Ajusta el respaldo para que la rodilla quede alineada con el eje de la máquina y el rodillo sobre el tobillo.',
-      'Estira las piernas por completo, aprieta un segundo y baja en 2–3 segundos.',
-      'Dejar caer el peso o despegar la cadera del asiento.',
-    ],
+    how: {
+      setup: [
+        'Ajusta el respaldo para que la rodilla quede alineada con el eje de la máquina.',
+        'Rodillo sobre la parte baja de la espinilla, arriba del tobillo.',
+        'Agárrate de las manijas del asiento.',
+      ],
+      move: [
+        'Estira las piernas por completo.',
+        'Aprieta un segundo arriba.',
+        'Baja en 2–3 segundos hasta que las rodillas queden un poco más dobladas que 90°.',
+      ],
+      tempo: '1 s subiendo · 1 s arriba · 2–3 s bajando',
+      feel: 'Frente del muslo.',
+      errors: [
+        ['Dejar caer el peso', 'Controla la bajada.'],
+        ['Despegar la cadera', 'Sostente de las manijas.'],
+        ['Patear con impulso', 'Sube con control.'],
+      ],
+    },
   },
   curl_femoral: {
     name: 'Curl femoral', alt: 'acostado o sentado', muscle: 'Isquiotibiales',
     cue: 'Cadera pegada al banco; sube y baja controlado.',
-    how: [
-      'Acuéstate boca abajo con el rodillo justo arriba de los talones y las rodillas fuera del borde del banco.',
-      'Lleva los talones hacia los glúteos y baja despacio hasta casi estirar.',
-      'Levantar la cadera del banco para ayudarte.',
-    ],
+    how: {
+      setup: [
+        'Acostado: boca abajo con las rodillas justo fuera del borde del banco. Sentado: alinea la rodilla con el eje de la máquina.',
+        'Rodillo justo arriba de los talones.',
+        'Agárrate de las manijas.',
+      ],
+      move: [
+        'Lleva los talones hacia los glúteos.',
+        'Aprieta un segundo.',
+        'Baja despacio hasta casi estirar las piernas.',
+      ],
+      tempo: '1 s subiendo · 1 s pausa · 2–3 s bajando',
+      feel: 'Parte de atrás del muslo.',
+      errors: [
+        ['Levantar la cadera del banco', 'Cadera pegada; si se levanta, baja el peso.'],
+        ['Soltar la bajada', 'La bajada dura el doble.'],
+        ['Mover con impulso', 'Movimiento controlado.'],
+      ],
+    },
   },
   talones: {
     name: 'Elevación de talones en máquina', muscle: 'Pantorrilla',
     cue: 'Pausa arriba y baja despacio.',
-    how: [
-      'Hombros bajo las almohadillas y la punta de los pies en el borde de la plataforma.',
-      'Sube sobre las puntas lo más alto que puedas, pausa y baja hasta estirar la pantorrilla.',
-      'Rebotar abajo o doblar las rodillas.',
-    ],
+    how: {
+      setup: [
+        'Hombros debajo de las almohadillas.',
+        'Punta de los pies en el borde de la plataforma, talones al aire.',
+        'Rodillas estiradas sin bloquear.',
+      ],
+      move: [
+        'Baja los talones hasta sentir el estiramiento en la pantorrilla y espera 1–2 s.',
+        'Sube sobre las puntas lo más alto que puedas.',
+        'Pausa arriba y vuelve a bajar despacio.',
+      ],
+      tempo: '1 s subiendo · 1 s arriba · 2 s bajando · 1–2 s abajo',
+      feel: 'Pantorrilla.',
+      errors: [
+        ['Rebotar abajo', 'Pausa en el estiramiento.'],
+        ['Doblar las rodillas para ayudarte', 'Rodillas quietas.'],
+        ['Recortar el recorrido', 'Sube y baja por completo.'],
+      ],
+    },
   },
 
   // ---- abdomen
   crunch_polea: {
     name: 'Crunch en polea alta', alt: 'con cuerda', muscle: 'Abdomen',
     cue: 'Flexiona el tronco; no tires del cuello.',
-    how: [
-      'De rodillas frente a la polea alta, cuerda a los lados de la cabeza.',
-      'Enrolla el tronco llevando los codos hacia los muslos; la cadera no se mueve. Sube despacio.',
-      'Sentarte sobre los talones y jalar con los brazos.',
-    ],
+    how: {
+      setup: [
+        'Polea alta con cuerda.',
+        'Arrodíllate frente a la polea, toma la cuerda y lleva los extremos a los lados de la cabeza.',
+        'Cadera alta, sin sentarte en los talones.',
+      ],
+      move: [
+        'Enrolla el tronco llevando los codos hacia los muslos, como si quisieras juntar costillas y cadera.',
+        'La cadera no se mueve; solo se dobla la columna.',
+        'Sube despacio hasta estirar el abdomen.',
+      ],
+      tempo: '1 s bajando · 1 s pausa · 2 s subiendo',
+      breath: 'Suelta todo el aire al enrollarte.',
+      feel: 'Abdomen.',
+      errors: [
+        ['Sentarte sobre los talones', 'Cadera alta y quieta.'],
+        ['Jalar con los brazos', 'Los brazos solo sostienen la cuerda junto a la cabeza.'],
+        ['Doblar desde la cadera', 'Enrolla la columna; no inclines el torso entero.'],
+      ],
+    },
   },
   elev_piernas: {
     load: 'none', name: 'Elevación de rodillas', alt: 'colgado o en paralelas', muscle: 'Abdomen bajo',
     cue: 'Evita balancearte; elige la variante controlable.',
-    how: [
-      'Cuélgate de una barra o apóyate en las paralelas con los brazos estirados, cuerpo quieto.',
-      'Sube las rodillas hacia el pecho enrollando la pelvis y baja despacio.',
-      'Columpiarte para subir las piernas.',
-    ],
+    how: {
+      setup: [
+        'En paralelas: apóyate con los brazos estirados y los hombros abajo. Colgado: agarre al ancho de los hombros.',
+        'Cuerpo quieto y piernas colgando.',
+      ],
+      move: [
+        'Sube las rodillas hacia el pecho.',
+        'Al final enrolla la pelvis hacia arriba, como si llevaras las rodillas a la cara.',
+        'Baja despacio hasta estirar las piernas, sin columpiarte.',
+      ],
+      tempo: '1 s subiendo · 2 s bajando',
+      feel: 'Abdomen bajo.',
+      errors: [
+        ['Columpiarte', 'Detente un momento abajo antes de subir.'],
+        ['Subir las piernas sin enrollar la pelvis', 'El trabajo está en el último tramo.'],
+        ['Hundir los hombros', 'Empuja hacia abajo para quedar firme.'],
+      ],
+    },
   },
 
   // ---- cardio
-  escaladora: {
-    name: 'Escaladora', muscle: 'Cardio',
-    cue: 'Ritmo moderado: debes poder hablar en frases cortas. Sin colgarte de los barandales.',
-    how: [],
+  eliptica: {
+    name: 'Elíptica', muscle: 'Cardio',
+    cue: 'Ritmo moderado: debes poder hablar en frases cortas. Empuja con las piernas, no con los brazos.',
+    how: {
+      setup: [
+        'Súbete con la máquina detenida, un pie en cada pedal, y toma las manijas móviles.',
+        'Elige una resistencia con la que puedas hablar en frases cortas.',
+      ],
+      move: [
+        'Pedalea hacia adelante con todo el pie apoyado en el pedal.',
+        'Cuerpo derecho y abdomen firme; los brazos acompañan y las piernas hacen el trabajo.',
+        'Mantén el ritmo constante; si te cuesta hablar, baja la resistencia.',
+      ],
+      tempo: 'Ritmo constante',
+      breath: 'Respiración acelerada pero controlada.',
+      feel: 'Piernas y glúteos; el pulso sube.',
+      errors: [
+        ['Pararte de puntas', 'Todo el pie en el pedal, talón incluido.'],
+        ['Recargarte en las manijas', 'Cuerpo derecho; las manos solo acompañan.'],
+        ['Ir tan rápido que no puedas hablar', 'Debe ser moderado.'],
+      ],
+    },
   },
   bici: {
     name: 'Bicicleta', muscle: 'Cardio',
     cue: 'Debes poder hablar en frases cortas.',
-    how: [],
+    how: {
+      setup: [
+        'Ajusta el asiento: con el pedal abajo, la rodilla queda casi estirada.',
+        'Manubrio a una altura cómoda, espalda neutra.',
+      ],
+      move: [
+        'Pedalea a ritmo constante con resistencia moderada.',
+        'Termina con 1–2 minutos suaves.',
+      ],
+      tempo: 'Ritmo constante',
+      breath: 'Respiración acelerada pero controlada.',
+      feel: 'Piernas; el pulso sube.',
+      errors: [
+        ['Asiento muy bajo', 'Molesta las rodillas; súbelo.'],
+        ['Tanta resistencia que el cuerpo rebota', 'Baja la resistencia.'],
+      ],
+    },
   },
 };
 
@@ -312,13 +777,13 @@ const DAYS = [
     title: 'Empuje', focus: 'Pecho superior · hombro lateral · tríceps',
     items: [
       { ex: 'press_inclinado_barra', sets: 3, reps: [6, 10], rest: '2–3 min', restSec: 150, isNew: true },
-      { ex: 'press_maquina', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120 },
-      { ex: 'apertura_baja', sets: 3, reps: [12, 15], rest: '60–90 s', restSec: 75, isNew: true },
+      { ex: 'press_plano', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120, isNew: true },
+      { ex: 'apertura_baja', sets: 3, reps: [12, 15], perSide: true, rest: '60–90 s', restSec: 75, isNew: true },
       { ex: 'lat_polea', sets: 3, reps: [12, 15], perSide: true, rest: '60 s', restSec: 60, extra: true },
       { ex: 'ext_triceps', sets: 3, reps: [10, 15], rest: '60–90 s', restSec: 75 },
       { ex: 'ext_sobre_cabeza', sets: 2, reps: [10, 15], rest: '60–90 s', restSec: 75 },
     ],
-    cardio: { ex: 'escaladora', text: '15–20 min moderados al terminar', short: 'Escaladora 15–20' },
+    cardio: { ex: 'eliptica', text: '15–20 min moderados al terminar', short: 'Elíptica 15–20' },
   },
   {
     title: 'Jalón', focus: 'Espalda en V · bíceps',
@@ -331,7 +796,7 @@ const DAYS = [
       { ex: 'curl_barra', sets: 3, reps: [8, 12], rest: '60–90 s', restSec: 75, isNew: true },
       { ex: 'curl_cuerda', sets: 2, reps: [10, 15], rest: '60–90 s', restSec: 75, isNew: true },
     ],
-    cardio: { ex: 'escaladora', text: '15–20 min moderados al terminar', short: 'Escaladora 15–20' },
+    cardio: { ex: 'eliptica', text: '15–20 min moderados al terminar', short: 'Elíptica 15–20' },
   },
   {
     title: 'Pierna + abdomen', focus: 'Cuádriceps · femoral · pantorrilla · core',
@@ -351,12 +816,12 @@ const DAYS = [
     items: [
       { ex: 'press_hombro', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120 },
       { ex: 'elev_laterales', sets: 4, reps: [12, 20], rest: '60–90 s', restSec: 75, extra: true, cue: 'Controla la bajada y evita balancearte.' },
-      { ex: 'pajaro_polea', sets: 3, reps: [12, 20], rest: '60–90 s', restSec: 75, isNew: true },
+      { ex: 'pajaro_polea', sets: 3, reps: [12, 20], perSide: true, rest: '60–90 s', restSec: 75, isNew: true },
       { ex: 'curl_polea', sets: 3, reps: [10, 15], rest: '60–90 s', restSec: 75 },
       { ex: 'press_frances', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90, isNew: true },
       { ex: 'curl_inclinado', sets: 2, reps: [10, 12], rest: '60–90 s', restSec: 75 },
     ],
-    cardio: { ex: 'escaladora', text: '15–20 min moderados al terminar', short: 'Escaladora 15–20' },
+    cardio: { ex: 'eliptica', text: '15–20 min moderados al terminar', short: 'Elíptica 15–20' },
   },
   {
     title: 'Torso en V', focus: 'Pecho · espalda · deltoides · abdomen',
@@ -364,12 +829,12 @@ const DAYS = [
       { ex: 'press_inclinado', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120, cue: 'Usa un peso controlable, sin rebotes.' },
       { ex: 'jalon_cerrado', sets: 3, reps: [10, 12], rest: '2 min', restSec: 120, extra: true, isNew: true },
       { ex: 'remo_polea_una', sets: 3, reps: [10, 12], perSide: true, rest: '90 s', restSec: 90, isNew: true },
-      { ex: 'cruce_poleas', sets: 2, reps: [12, 15], rest: '60–90 s', restSec: 75 },
+      { ex: 'cruce_poleas', sets: 2, reps: [12, 15], perSide: true, rest: '60–90 s', restSec: 75 },
       { ex: 'lat_polea', sets: 3, reps: [12, 15], perSide: true, rest: '60 s', restSec: 60, extra: true },
       { ex: 'face_pull', sets: 2, reps: [15, 15], rest: '60–90 s', restSec: 75 },
       { ex: 'crunch_polea', sets: 2, reps: [12, 15], rest: '60 s', restSec: 60 },
     ],
-    cardio: { ex: 'escaladora', text: '20 min moderados al terminar', short: 'Escaladora 20' },
+    cardio: { ex: 'eliptica', text: '20 min moderados al terminar', short: 'Elíptica 20' },
   },
 ];
 
@@ -378,7 +843,7 @@ const RULES = {
   execution: 'Usa un peso que puedas controlar y deja 1–3 repeticiones en reserva. Detén cualquier movimiento que cause dolor agudo.',
   firstWeeks: 'Prioriza la técnica y deja 2–3 repeticiones posibles al final de cada serie.',
   progression: 'Doble progresión: suma repeticiones con el mismo peso. Cuando completes el máximo del rango en todas las series con técnica limpia, sube el peso lo mínimo y vuelve al rango bajo.',
-  cardio: 'Escaladora los días de torso; bici el día de pierna. En la escaladora no te cuelgues de los barandales.',
+  cardio: 'Elíptica los días de torso; bici el día de pierna. En la elíptica empuja con las piernas, no con los brazos.',
   steps: '8 000–10 000 pasos al día.',
   extra: 'Desde la semana 5, si te recuperas bien: +1 serie en espalda y elevaciones laterales.',
   measure: 'Pésate 3–4 mañanas por semana y compara el promedio. Cintura cada 2 semanas, fotos cada mes con la misma luz.',
