@@ -271,7 +271,7 @@ function checkRow(key, thumb, name, rx, i) {
       <button type="button" class="check" data-toggle="${key}" aria-pressed="${on}" aria-label="Marcar ${name.toLowerCase()} como hecha">${ICON.check}</button>
     </div></li>`;
 }
-const stepsRow = (i = 0) => checkRow('_steps', `<span class="thumb thumb--plain">${ICON.steps}</span>`, 'Pasos', '8 000–10 000 hoy', i);
+const stepsRow = (i = 0) => checkRow('_steps', `<span class="thumb thumb--plain">${ICON.steps}</span>`, 'Pasos', `${STEPS_GOAL(todayKey())} hoy`, i);
 
 // barra de ejercicios del detalle: hechos llenos, el actual con anillo
 function exRail(day, i) {
