@@ -313,14 +313,65 @@ const POSES = {
   },
 
   apertura_baja(ph, v) {
+    // cruce de poleas: una polea baja a cada lado, las dos manos a la vez
     const { svg, J } = front({
       shY: 104, hipY: 168,
-      arm: { to: v([150, 168], [192, 128]), bend: 1 }, armR: { a: 86, b: 88 }, leg: { a: 94, b: 90 },
-      back: () => tower(78, 36, -1),
+      arm: { to: v([146, 174], [190, 130]), bend: 1 }, leg: { a: 94, b: 90 },
+      back: () => tower(78, 36, -1) + tower(322, 36, 1),
     });
-    const h = J.armL[2];
-    return pulley([90, 250]) + cable(h, [92, 246]) + svg + grip(h) +
-      (ph ? moveLine([120, 216], [158, 168]) + mark([186, 114]) : '');
+    const h = J.armL[2], h2 = J.armR[2];
+    return pulley([90, 250]) + pulley([310, 250]) + cable(h, [92, 246]) + cable(h2, [308, 246]) + svg + grip(h) + grip(h2) +
+      (ph ? moveLine([118, 220], [156, 172]) + moveLine([282, 220], [244, 172]) + mark([184, 116]) + mark([216, 116]) : '');
+  },
+
+  fondos(ph, v) {
+    const hand = [214, 162];
+    // abajo: hombros por delante de las manos y codos hacia atrás; arriba: brazos estirados
+    const hip = v([216, 184], [186, 152]);
+    const { svg, J } = side({
+      hip, torso: v(-62, -76), headA: v(-58, -70),
+      arm: v({ a: 170, b: 80 }, { to: hand, bend: 1 }),
+      leg: { a: 104, b: 172, ft: 130 }, farLeg: { a: 98, b: 178, ft: 134 },
+      back: () => post([150, FLOOR], [150, 150]) + post([262, FLOOR], [262, 150]) + beam([138, 166], [274, 166], 9, TONE.metal),
+    });
+    const chest = at(at(J.sh, 14, 12), 104, 10);
+    return svg + (ph ? moveLine([300, 150], [300, 106]) + mark(chest) : '');
+  },
+
+  curl_predicador(ph, v) {
+    const ua = 46;
+    const { svg, J } = side({
+      hip: [176, 214], torso: -80, headA: -64,
+      arm: { a: ua, b: v(40, -74) }, farArm: { a: ua, b: v(40, -74) }, farShift: [-3, -2],
+      leg: { a: -4, b: 92 },
+      back: () => bar([176, FLOOR - 4], [176, 232]) + beam([146, FLOOR - 3], [206, FLOOR - 3], 6) + pad([140, 230], [204, 230]),
+      mid: (J) => {
+        // cojín inclinado bajo el brazo, con su poste
+        const o = at([0, 0], ua + 90, 13);
+        const a = add(at(J.sh, ua, 12), o), b = add(at(J.sh, ua, 48), o);
+        return bar(lerp(a, b, 0.6), [lerp(a, b, 0.6)[0], FLOOR - 4]) + beam([lerp(a, b, 0.6)[0] - 22, FLOOR - 3], [lerp(a, b, 0.6)[0] + 22, FLOOR - 3], 6) + pad(a, b);
+      },
+      item: (h) => bbEnd(h),
+    });
+    const el = J.arm[1];
+    const bi = lerp(J.arm[0], J.arm[1], 0.55);
+    return svg + (ph ? moveArc(el, 52, 36, -70) + mark(add(bi, at([0, 0], ua - 90, 8))) : '');
+  },
+
+  plancha(ph, v) {
+    // inicio: de rodillas para acomodarte; final: cuerpo en línea recta
+    const sh = [236, 220];
+    const t = v(-2, -12); // cadera → hombro
+    const hip = at(sh, t + 180, LEN.torso);
+    const { svg, J } = side({
+      hip, torso: t, headA: t + 6,
+      arm: { a: 92, b: -2 }, farShift: [5, -3],
+      leg: v({ a: 112, b: 180, ft: 180 }, { a: 168, b: 168, ft: 78 }),
+    });
+    const ab = add(lerp(J.hip, J.sh, 0.4), at([0, 0], t + 90, 12));
+    const up = at([0, 0], t - 90, 30);
+    const line = `<g class="ann">${seg(add(J.leg[2], up), add(J.head, up), 1.5, C.ink, dash)}</g>`;
+    return svg + (ph ? line + mark(ab) : '');
   },
 
   cruce_poleas(ph, v) {
@@ -681,8 +732,11 @@ function fitFigures(root) {
       if (bs.some((b) => !b)) return;
       const x = Math.min(...bs.map((b) => b.x)), y = Math.min(...bs.map((b) => b.y));
       const r = Math.max(...bs.map((b) => b.x + b.width)), btm = Math.max(...bs.map((b) => b.y + b.height));
-      boxes[key] = frameBox({ x, y, width: r - x, height: btm - y }, 3 / 4, 14, 34);
+      // figuras acostadas (plancha): paneles anchos en vez de verticales
+      const wide = (r - x) / (btm - y) > 2.2;
+      boxes[key] = { vb: frameBox({ x, y, width: r - x, height: btm - y }, wide ? 3 / 2 : 3 / 4, 14, wide ? 52 : 34), wide };
     }
-    svgs.forEach((s) => s.setAttribute('viewBox', boxes[key]));
+    duo.classList.toggle('duo--wide', boxes[key].wide);
+    svgs.forEach((s) => s.setAttribute('viewBox', boxes[key].vb));
   });
 }

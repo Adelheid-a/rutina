@@ -300,3 +300,15 @@ Exercise detail shows "Técnica paso a paso" as a collapsible plate (open by def
 - **Errores comunes:** each error in ink, with its correction in mute below it, marked by a 10px straight-line dash.
 
 None of these use numbers or cards.
+
+## Addendum: session instruments (2026-10-27)
+
+- **Day picker:** weekday letter (11px, dim) over the date numeral (17px) in a 34px circle. Today = strong-hairline ring; selected = ink fill with ground numeral. Press scales to 0.94.
+- **Today header:** date line (13px mute), session title as Display, focus line, a spec line in 13px ink (Semana · ejercicios · ≈ min) separated by 3px dots, then the **session rail**: one group of 7px pips per exercise (3px inside a group, 8px between groups) between two hairlines, with "n/total" at the right.
+- **Supersets:** a "Superserie" label row; the two rows are inset 18px and joined by a 1px strong-hairline line with a 9px ink ring at each row's center. In detail, a two-option segmented switch (plate, raised-plate selection) jumps between the pair.
+- **Exercise rail:** 6px pips in the detail top bar, done filled, current ringed.
+- **Trend:** last-session plate carries the best weight per session as small rings on a strong-hairline line; the latest point is an ink dot. Caption: first date and weight left, gain right in ink.
+- **Weekly volume (Plan):** each group is a 1px hairline track with a raised-plate band for the recommended 10–20 sets, an ink 2px line from zero with a 9px ink head dot, and the number at right.
+- **Tab bar:** 78% ground with a 20px backdrop blur (content scrolls under it) and a 28×2px ink indicator on the active tab's top edge.
+- **Motion:** rows enter staggered (32ms steps, 420ms, translateY 10px) only when the day changes; checking a set emits one ink ring that grows to 1.45× and fades (520ms). Volume lines draw in once (600ms). Reduced motion keeps fades only.
+- **Wide poses:** figures much wider than tall (plancha) use 3:2 panels inside a 3:1 duo.
