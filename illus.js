@@ -375,14 +375,15 @@ const POSES = {
   },
 
   cruce_poleas(ph, v) {
+    // cruce de poleas a la altura del pecho: las dos manos se juntan al frente
     const { svg, J } = front({
       shY: 104, hipY: 168,
-      arm: { to: v([116, 86], [194, 156]), bend: 1 }, armR: { a: 86, b: 88 }, leg: { a: 94, b: 90 },
-      back: () => tower(78, 36, -1),
+      arm: { to: v([104, 122], [192, 138]), bend: 1 }, leg: { a: 94, b: 90 },
+      back: () => tower(78, 36, -1) + tower(322, 36, 1),
     });
-    const h = J.armL[2];
-    return pulley([90, 48]) + cable(h, [92, 52]) + svg + grip(h) +
-      (ph ? moveLine([124, 108], [164, 140]) + mark([188, 124]) : '');
+    const h = J.armL[2], h2 = J.armR[2];
+    return pulley([90, 112]) + pulley([310, 112]) + cable(h, [94, 112]) + cable(h2, [306, 112]) + svg + grip(h) + grip(h2) +
+      (ph ? moveArc([200, 60], 96, 152, 112) + moveArc([200, 60], 96, 28, 68) + mark([184, 120]) + mark([216, 120]) : '');
   },
 
   jalon(ph, v) {
