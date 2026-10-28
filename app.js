@@ -198,7 +198,7 @@ function renderToday(d) {
         ${weekDots()}
         <p>Recuperación. Procura dormir 7–9 horas y beber agua regularmente.</p>
       </div>
-      <ul class="list">${stepsRow()}</ul>
+      <ul class="list">${extraRow()}</ul>
       <div class="next"><a class="btn btn--ghost btn--block" href="#/hoy/0"><span>Ver la rutina del lunes</span>${ICON.next}</a></div>`;
     paint(html, moved ? 'view' : '');
     return;
@@ -241,7 +241,7 @@ function renderToday(d) {
   });
   const n = day.items.length + 1;
   if (day.cardio) html += checkRow('_cardio', `<span class="thumb">${illustration(day.cardio.ex, null, true)}</span>`, EXERCISES[day.cardio.ex].name, day.cardio.text, n);
-  html += stepsRow(n + 1) + '</ol>';
+  html += extraRow(n + 1) + '</ol>';
   paint(html, moved ? 'view' : '');
   if (moved) screen.querySelector('.list').classList.add('is-entering');
   fitThumbs();
@@ -271,7 +271,8 @@ function checkRow(key, thumb, name, rx, i) {
       <button type="button" class="check" data-toggle="${key}" aria-pressed="${on}" aria-label="Marcar ${name.toLowerCase()} como hecha">${ICON.check}</button>
     </div></li>`;
 }
-const stepsRow = (i = 0) => checkRow('_steps', `<span class="thumb thumb--plain">${ICON.steps}</span>`, 'Pasos', `${STEPS_GOAL(todayKey())} hoy`, i);
+// cardio extra en casa (cuerda o HIIT) en lugar de una meta de pasos
+const extraRow = (i = 0) => checkRow('_extra', `<span class="thumb thumb--plain">${ICON.steps}</span>`, 'Cardio extra', '10–15 min de cuerda o HIIT en casa', i);
 
 // barra de ejercicios del detalle: hechos llenos, el actual con anillo
 function exRail(day, i) {
@@ -438,7 +439,7 @@ function renderPlan() {
       <div><dt>Estancamiento</dt><dd>${RULES.stall}</dd></div>
       <div><dt>Descarga</dt><dd>${RULES.deload}</dd></div>
       <div><dt>Cardio</dt><dd>${RULES.cardio}</dd></div>
-      <div><dt>Pasos</dt><dd>${RULES.steps}</dd></div>
+      <div><dt>Cardio extra</dt><dd>${RULES.extra}</dd></div>
       <div><dt>Cómo medir</dt><dd>${RULES.measure}</dd></div>
     </dl>
 

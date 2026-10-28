@@ -968,7 +968,7 @@ const DAYS = [
       { ex: 'pullover_polea', sets: 2, reps: [12, 15], rest: '60–90 s', restSec: 75 },
       { ex: 'elev_laterales', sets: 3, reps: [12, 20], rest: '60 s', restSec: 60, drop: true },
     ],
-    cardio: { ex: 'eliptica', text: '30–35 min moderados al terminar', short: 'Elíptica 30–35' },
+    cardio: { ex: 'eliptica', text: '20 min moderados al terminar', short: 'Elíptica 20' },
   },
   {
     title: 'Hombros + brazos', focus: 'Deltoides · bíceps · tríceps',
@@ -982,7 +982,7 @@ const DAYS = [
       { ex: 'fondos', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120, isNew: true },
       { ex: 'curl_cuerda', sets: 2, reps: [10, 15], rest: '60 s', restSec: 60, drop: true },
     ],
-    cardio: { ex: 'eliptica', text: '30–35 min moderados al terminar', short: 'Elíptica 30–35' },
+    cardio: { ex: 'eliptica', text: '20 min moderados al terminar', short: 'Elíptica 20' },
   },
   {
     title: 'Pierna + abdomen', focus: 'Pierna para mantener · core',
@@ -1008,7 +1008,7 @@ const DAYS = [
       { ex: 'face_pull', sets: 3, reps: [15, 20], rest: '60 s', restSec: 60 },
       { ex: 'elev_laterales', sets: 3, reps: [12, 20], rest: '60 s', restSec: 60, drop: true },
     ],
-    cardio: { ex: 'eliptica', text: '30–35 min moderados al terminar', short: 'Elíptica 30–35' },
+    cardio: { ex: 'eliptica', text: '20 min moderados al terminar', short: 'Elíptica 20' },
   },
   {
     title: 'Brazos + hombro', focus: 'Bíceps · tríceps · deltoide lateral · abdomen',
@@ -1021,7 +1021,7 @@ const DAYS = [
       { ex: 'crunch_polea', sets: 3, reps: [10, 15], rest: '60 s', restSec: 60 },
       { ex: 'elev_piernas', sets: 3, reps: [10, 15], rest: '60 s', restSec: 60 },
     ],
-    cardio: { ex: 'eliptica', text: '30–35 min moderados al terminar', short: 'Elíptica 30–35' },
+    cardio: { ex: 'eliptica', text: '20 min moderados al terminar', short: 'Elíptica 20' },
   },
 ];
 
@@ -1032,8 +1032,6 @@ const GROUPS = [
 ];
 const VOLUME_RANGE = [10, 20];
 
-// meta de pasos: sube cuando empiece la dieta (2026-11-16)
-const STEPS_GOAL = (dayKey) => (dayKey < '2026-11-16' ? '5 000' : '8 000');
 
 const RULES = {
   warmup: '5 min de cardio suave y 1–2 series ligeras del primer ejercicio. No cuentan como series efectivas.',
@@ -1044,7 +1042,7 @@ const RULES = {
   superset: 'Haz una serie de cada ejercicio seguidas, sin descanso entre ellas, y descansa al terminar las dos.',
   stall: 'Si un ejercicio no mejora peso ni repeticiones en 2–3 semanas, revisa sueño y comida antes de cambiarlo. Si se estancan varios a la vez, quita 1 serie a cada aislado.',
   deload: 'Cada 6–8 semanas, o si estás cansado todo el tiempo: una semana con la mitad de las series y el mismo peso.',
-  cardio: 'Elíptica 30–35 min los días de torso (cubre parte de los pasos que faltan); bici opcional el día de pierna. En la elíptica empuja con las piernas, no con los brazos.',
-  steps: '5 000 pasos al día hasta el 15 de noviembre; desde el 16, 8 000. Caminar 15 min después de comer y de cenar suma unos 3 000.',
+  cardio: 'Elíptica 20 min moderados los días de torso; bici opcional el día de pierna. En la elíptica empuja con las piernas, no con los brazos.',
+  extra: 'En lugar de una meta de pasos: 10–15 min de cuerda o HIIT en casa la mayoría de los días (30 s fuerte, 30 s suave). Si un día no puedes, súmale 5–10 min a la elíptica.',
   measure: 'Pésate 3–4 mañanas por semana y compara el promedio. Cintura cada 2 semanas, fotos cada mes con la misma luz.',
 };
