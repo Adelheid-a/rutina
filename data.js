@@ -610,6 +610,30 @@ const EXERCISES = {
       ],
     },
   },
+  curl_polea_z: {
+    ill: 'curl_polea', short: 'Curl con barra Z', g: ['biceps'],
+    name: 'Curl en polea baja con barra Z', alt: 'agarre inclinado, más cómodo para la muñeca', muscle: 'Bíceps',
+    cue: 'Codos pegados al cuerpo; sube sin balancearte y baja lento.',
+    how: {
+      setup: [
+        'Polea baja con barra Z (la que tiene los agarres inclinados).',
+        'Toma la barra en la parte inclinada, palmas hacia arriba, y da un paso atrás para que el cable tenga tensión abajo.',
+        'Pies al ancho de la cadera, rodillas suaves y codos pegados a los costados.',
+      ],
+      move: [
+        'Sube la barra doblando solo los codos hasta la altura del pecho.',
+        'Aprieta el bíceps un segundo arriba.',
+        'Baja despacio hasta casi estirar los brazos, sin soltar la tensión.',
+      ],
+      tempo: '1 s subiendo · 1 s arriba · 2–3 s bajando',
+      feel: 'Frente del brazo.',
+      errors: [
+        ['Echar el cuerpo atrás para subir', 'Si te balanceas, baja el peso.'],
+        ['Adelantar los codos', 'Los codos se quedan junto a las costillas.'],
+        ['Soltar la barra abajo', 'Baja controlado; la tensión no se pierde.'],
+      ],
+    },
+  },
   curl_polea: {
     short: 'Curl en polea',
     g: ['biceps'],
@@ -952,7 +976,7 @@ const DAYS = [
       { ex: 'press_hombro', sets: 4, reps: [6, 10], rest: '2–3 min', restSec: 150 },
       { ex: 'lat_polea', sets: 4, reps: [12, 15], perSide: true, rest: '60 s', restSec: 60, drop: true },
       { ex: 'pajaro_polea', sets: 3, reps: [15, 20], perSide: true, rest: '60 s', restSec: 60 },
-      { ex: 'curl_barra', sets: 3, reps: [6, 10], rest: '2 min', restSec: 120 },
+      { ex: 'curl_polea_z', sets: 3, reps: [8, 12], rest: '90 s', restSec: 90, isNew: true },
       { ex: 'ext_triceps', sets: 3, reps: [10, 15], rest: '60–90 s', restSec: 75 },
       { ex: 'curl_inclinado', sets: 3, reps: [10, 12], rest: 'Sin descanso', restSec: 0, pair: true },
       { ex: 'fondos', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120, isNew: true },
