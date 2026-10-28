@@ -565,6 +565,23 @@ const POSES = {
     return svg + (ph ? moveLine([276, 214], [318, 178]) + mark([quad[0] + 2, quad[1] - 8]) : '');
   },
 
+  hip_thrust(ph, v) {
+    // espalda alta apoyada en el banco; la cadera sube hasta quedar en línea con hombros y rodillas
+    const sh = [136, 198];
+    const t = v(-150, 180); // cadera → hombro
+    const hip = at(sh, t + 180, LEN.torso);
+    const belt = at(hip, t + 90, 18);
+    const { svg, J } = side({
+      hip, torso: t, headA: v(-118, -150),
+      arm: { to: add(belt, [-6, 4]), bend: 1 },
+      leg: { to: [256, 256], bend: -1, ft: 0 },
+      back: () => bar([100, 226], [100, FLOOR - 4]) + bar([140, 226], [140, FLOOR - 4]) + beam([86, FLOOR - 3], [154, FLOOR - 3], 6) +
+        pad([82, 220], [150, 220]),
+      front: () => ball(belt, 9, TONE.pad),
+    });
+    return svg + (ph ? moveLine([228, 186], [228, 146]) + mark(at(J.hip, t - 90, 12)) : '');
+  },
+
   rdl_barra(ph, v) {
     const { svg, J } = side({
       hip: v([170, 171], [180, 168]), torso: v(-25, -86), headA: v(-18, -86),

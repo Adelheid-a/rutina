@@ -759,6 +759,30 @@ const EXERCISES = {
       ],
     },
   },
+  hip_thrust: {
+    kind: 'c', g: ['pierna'],
+    name: 'Hip thrust en máquina', alt: 'o con barra y espalda en un banco', muscle: 'Glúteo',
+    cue: 'Sube hasta que cadera, hombros y rodillas queden en línea; aprieta arriba.',
+    how: {
+      setup: [
+        'Espalda alta apoyada en el respaldo, justo debajo de los omóplatos.',
+        'Cinturón o almohadilla sobre la cadera, no sobre el abdomen.',
+        'Pies al ancho de la cadera, a una distancia en la que arriba las espinillas queden verticales.',
+      ],
+      move: [
+        'Aprieta el abdomen y mete un poco la pelvis, como si acercaras el ombligo a las costillas.',
+        'Empuja con los talones y sube la cadera hasta que el torso quede paralelo al piso.',
+        'Aprieta los glúteos un segundo arriba y baja controlado sin tocar el piso.',
+      ],
+      tempo: '1 s subiendo · 1 s arriba · 2 s bajando',
+      feel: 'Glúteos. Si lo sientes en la espalda baja, estás arqueando de más; si lo sientes en el frente del muslo, aleja los pies.',
+      errors: [
+        ['Arquear la espalda baja arriba', 'Barbilla un poco abajo y costillas cerradas; la cadera termina en línea, no más alto.'],
+        ['Empujar con la punta del pie', 'El peso va en los talones.'],
+        ['Subir con rebote', 'Pausa arriba en cada repetición.'],
+      ],
+    },
+  },
   ext_cuadriceps: {
     g: ['pierna'],
     name: 'Extensión de cuádriceps', muscle: 'Cuádriceps',
@@ -985,15 +1009,16 @@ const DAYS = [
     cardio: { ex: 'eliptica', text: '20 min moderados al terminar', short: 'Elíptica 20' },
   },
   {
-    title: 'Pierna + abdomen', focus: 'Pierna para mantener · core',
+    title: 'Pierna + abdomen', focus: 'Pierna sin crecer de más · glúteo · core',
     items: [
-      { ex: 'prensa', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120 },
+      { ex: 'prensa', sets: 4, reps: [8, 12], rest: '2 min', restSec: 120 },
+      { ex: 'hip_thrust', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90, isNew: true },
       { ex: 'rdl_barra', sets: 3, reps: [8, 10], rest: '2 min', restSec: 120 },
       { ex: 'curl_femoral', sets: 2, reps: [10, 15], rest: '90 s', restSec: 90 },
       { ex: 'talones', sets: 2, reps: [12, 20], rest: '60 s', restSec: 60 },
       { ex: 'crunch_polea', sets: 3, reps: [10, 15], rest: '60 s', restSec: 60 },
       { ex: 'elev_piernas', sets: 3, reps: [10, 15], rest: '60 s', restSec: 60 },
-      { ex: 'plancha', sets: 3, reps: [40, 60], unit: 's', rest: '60 s', restSec: 60, isNew: true },
+      { ex: 'plancha', sets: 2, reps: [40, 60], unit: 's', rest: '60 s', restSec: 60 },
     ],
     cardio: { ex: 'bici', text: 'Opcional: 10–15 min suaves', short: 'Bici opcional' },
   },
