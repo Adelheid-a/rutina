@@ -1,7 +1,9 @@
 // Copia en la nube (Supabase). La app sigue funcionando sin internet:
 // todo se guarda primero en el teléfono y aquí solo se sube lo que cambió.
-// Entrar: correo → link de un solo uso. En la app instalada (pantalla de inicio) el link abriría
-// Safari, que no comparte datos con la app; por eso también se puede copiar el link y pegarlo aquí.
+// Entrar (PKCE): la app pide un correo con link y guarda una clave secreta (verifier).
+// El link abre Safari, que en iPhone no comparte datos con la app instalada; Safari recibe un
+// código de un solo uso y lo muestra para copiarlo. La app lo canjea con su clave: el código
+// sin la clave no sirve. Si la app corre en Safari mismo, entra sola.
 
 const SB_URL = 'https://nrteskslkdqmkfoqkafe.supabase.co';
 const SB_KEY = 'sb_publishable_9U83XAuvrGSSTxFuEljfew_d0eZFsRr'; // llave pública; los datos los protege RLS
@@ -153,10 +155,13 @@ function syncSection() {
         <button type="button" class="btn btn--ghost btn--sm" id="syncNow">Sincronizar</button></div>
     </div>
     <button type="button" class="link-btn" id="syncOut">Cerrar sesión en este teléfono</button>`;
+  } else if (handoffCode) {
+    body = `<p class="fine">Ya casi. Abre la app <b>Rutina</b> desde tu pantalla de inicio y pega este código en <b>Plan → Copia en la nube</b>. Vence en unos minutos.</p>
+    <div class="handoff"><code id="handoffCode">${esc(handoffCode)}</code><button type="button" class="btn" id="copyHandoff">Copiar</button></div>`;
   } else if (sync.pendingEmail) {
-    body = `<p class="fine">Te mandamos un correo a <b>${esc(sync.pendingEmail)}</b> (puede tardar un minuto). Mantén presionado el link <b>Sign in</b>, elige <b>Copiar enlace</b> y pégalo aquí.</p>
+    body = `<p class="fine">Te mandamos un correo a <b>${esc(sync.pendingEmail)}</b> (puede tardar un minuto). Toca <b>Sign in</b>: se abre Safari con un código. Cópialo y pégalo aquí.</p>
     <form class="sync-form" id="syncCodeForm">
-      <input id="syncCode" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Pega el enlace" aria-label="Enlace del correo" required>
+      <input id="syncCode" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Pega el código" aria-label="Código de Safari" required>
       <button type="submit" class="btn">Entrar</button>
     </form>
     <button type="button" class="link-btn" id="syncBack">Usar otro correo o reenviar</button>`;
@@ -179,6 +184,27 @@ function refreshSyncRow() {
   if (small) small.textContent = lastText();
 }
 
+// ---------- PKCE ----------
+let handoffCode = '';
+const b64url = (bytes) => btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+async function newChallenge() {
+  sync.pkce = b64url(crypto.getRandomValues(new Uint8Array(32)));
+  saveSync();
+  const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(sync.pkce));
+  return b64url(new Uint8Array(hash));
+}
+async function exchangeCode(code) {
+  if (!sync.pkce) throw Object.assign(new Error('sin clave'), { status: 400 });
+  setSession(await sbFetch('/auth/v1/token?grant_type=pkce', { method: 'POST', body: JSON.stringify({ auth_code: code, code_verifier: sync.pkce }) }, false));
+  delete sync.pkce;
+  saveSync();
+}
+// el código que muestra Safari (o el link completo de regreso, si lo pegan)
+function parseCode(txt) {
+  const m = txt.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i);
+  return m ? m[0].toLowerCase() : null;
+}
+
 // del link del correo saca el token (aunque el correo lo haya envuelto en otro link)
 function parseLink(txt) {
   let s = txt;
@@ -199,12 +225,21 @@ async function afterLogin() {
   if (location.hash !== '#/plan') location.hash = '#/plan'; else route();
 }
 
-// si se tocó el link, Supabase regresa aquí con la sesión en el hash (#access_token=…)
+// regreso del link del correo: ?code=… (PKCE) o #access_token=… (flujo viejo)
 function readHashSession() {
+  const q = new URLSearchParams(location.search);
   const h = location.hash;
-  if (!/access_token=|error_description=/.test(h)) return;
+  if (!q.get('code') && !q.get('error_description') && !/access_token=|error_description=/.test(h)) return;
   const p = new URLSearchParams(h.replace(/^#\/?/, ''));
   history.replaceState(null, '', location.pathname + '#/plan');
+  if (q.get('code')) {
+    const code = q.get('code');
+    // misma app (Safari): entra sola; app instalada: Safari no tiene la clave, muestra el código
+    exchangeCode(code)
+      .then(afterLogin)
+      .catch(() => { handoffCode = code; syncMsg = ''; route(); });
+    return;
+  }
   if (p.get('access_token')) {
     let user = {};
     try { user = JSON.parse(atob(p.get('access_token').split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))); } catch (e) { /* token raro */ }
@@ -233,9 +268,13 @@ screen.addEventListener('submit', async (e) => {
     busy(form, true);
     setSyncMsg('Enviando…');
     try {
-      // si tocas el link en vez de copiarlo, regresa a esta misma página con la sesión
+      // el link regresa a esta misma página con ?code=…; solo esta app tiene la clave para canjearlo
       const back = encodeURIComponent(location.origin + location.pathname);
-      await sbFetch(`/auth/v1/otp?redirect_to=${back}`, { method: 'POST', body: JSON.stringify({ email, create_user: true }) }, false);
+      const challenge = await newChallenge();
+      await sbFetch(`/auth/v1/otp?redirect_to=${back}`, {
+        method: 'POST',
+        body: JSON.stringify({ email, create_user: true, code_challenge: challenge, code_challenge_method: 's256' }),
+      }, false);
       sync.pendingEmail = email;
       saveSync();
       syncMsg = '';
@@ -243,24 +282,24 @@ screen.addEventListener('submit', async (e) => {
       document.getElementById('syncCode')?.focus();
     } catch (err) {
       busy(form, false);
-      setSyncMsg(!navigator.onLine ? 'Necesitas internet para esto.' : err.status === 429 ? 'Pediste varios códigos seguidos. Espera unos minutos.' : 'No se pudo enviar el código. Revisa el correo e intenta otra vez.');
+      setSyncMsg(!navigator.onLine ? 'Necesitas internet para esto.' : err.status === 429 ? 'Pediste varios correos seguidos. Espera unos minutos y vuelve a intentar.' : 'No se pudo enviar el correo. Revísalo e intenta otra vez.');
     }
   }
   if (form.id === 'syncCodeForm') {
     e.preventDefault();
     const raw = form.querySelector('#syncCode').value.trim();
-    const link = parseLink(raw);
-    const code = /^\d{6,10}$/.test(raw) ? raw : null;
-    if (!link && !code) { setSyncMsg('Eso no parece el enlace del correo. Copia el link “Sign in” completo.'); return; }
+    const code = parseCode(raw);
+    const link = code ? null : parseLink(raw);
+    if (!code && !link) { setSyncMsg('Eso no parece el código. Cópialo completo con el botón “Copiar” de Safari.'); return; }
     busy(form, true);
     setSyncMsg('Revisando…');
     try {
-      const body = link ? { type: link.type, token_hash: link.token } : { type: 'email', email: sync.pendingEmail, token: code };
-      setSession(await sbFetch('/auth/v1/verify', { method: 'POST', body: JSON.stringify(body) }, false));
+      if (code) await exchangeCode(code);
+      else setSession(await sbFetch('/auth/v1/verify', { method: 'POST', body: JSON.stringify({ type: link.type, token_hash: link.token }) }, false));
       await afterLogin();
     } catch (err) {
       busy(form, false);
-      setSyncMsg(err.status === 403 || err.status === 400 || err.status === 401 ? 'Ese enlace ya se usó o venció. Pide uno nuevo con “Usar otro correo o reenviar”.' : 'No se pudo entrar. Intenta otra vez.');
+      setSyncMsg(err.status >= 400 && err.status < 500 ? 'Ese código ya se usó, venció o es de otro correo. Pide uno nuevo con “Usar otro correo o reenviar”.' : 'No se pudo entrar. Intenta otra vez.');
     }
   }
 });
@@ -273,8 +312,23 @@ screen.addEventListener('click', async (e) => {
     if (!syncMsg || syncMsg === 'Sincronizando…') setSyncMsg('Todo al día.');
     e.target.disabled = false;
   }
+  if (e.target.id === 'copyHandoff') {
+    try {
+      await navigator.clipboard.writeText(handoffCode);
+      e.target.textContent = 'Copiado';
+      setSyncMsg('Ahora abre la app Rutina y pégalo.');
+    } catch (err) {
+      // sin permiso de portapapeles: deja el código seleccionado para copiarlo a mano
+      const r = document.createRange();
+      r.selectNodeContents(document.getElementById('handoffCode'));
+      getSelection().removeAllRanges();
+      getSelection().addRange(r);
+      setSyncMsg('Mantén presionado el código seleccionado y elige Copiar.');
+    }
+  }
   if (e.target.id === 'syncBack') {
     delete sync.pendingEmail;
+    delete sync.pkce;
     saveSync();
     syncMsg = '';
     renderPlan();

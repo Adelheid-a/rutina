@@ -770,6 +770,20 @@ a.row:active .thumb { transform: scale(0.97); }
 }
 .sync-form input:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
 .sync-form .btn { flex: none; }
+.handoff { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+.handoff code {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--plate-2);
+  font: 600 14px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+  overflow-wrap: anywhere;
+  user-select: all;
+  -webkit-user-select: all;
+}
+.handoff .btn { flex: none; }
 .btn:disabled, .sync-form input:disabled { opacity: 0.5; }
 .btn--sm { min-height: 40px; padding: 0 14px; font-size: 14px; flex: none; }
 .link-btn {
