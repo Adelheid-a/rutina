@@ -1,7 +1,7 @@
 // Guarda todos los archivos la primera vez para que la app abra sin internet.
-const CACHE = 'rutina-v11';
+const CACHE = 'rutina-v12';
 const FILES = [
-  './', 'index.html', 'styles.css', 'app.js', 'data.js', 'illus.js', 'manifest.webmanifest',
+  './', 'index.html', 'styles.css', 'app.js', 'data.js', 'illus.js', 'sync.js', 'manifest.webmanifest',
   'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png',
 ];
 
@@ -20,6 +20,8 @@ self.addEventListener('activate', (e) => {
 // primero la copia guardada; si hay red, se actualiza en segundo plano
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
+  // la nube (Supabase) va directo a la red, nunca desde el caché
+  if (new URL(e.request.url).origin !== location.origin) return;
   e.respondWith(
     caches.match(e.request, { ignoreSearch: true }).then((hit) => {
       const net = fetch(e.request)

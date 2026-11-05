@@ -1,4 +1,5 @@
-// Rutina — app sin conexión. Todo se guarda en este teléfono (localStorage).
+// Rutina — app sin conexión. Todo se guarda en este teléfono (localStorage);
+// si hay sesión, sync.js sube una copia a Supabase.
 
 const DAY_NAMES = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 const DAY_SHORT = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
@@ -30,6 +31,7 @@ function load() {
 }
 function save() {
   try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* lleno o bloqueado */ }
+  if (typeof queueSync === 'function') queueSync(); // copia en la nube (sync.js)
 }
 const state = load();
 save();
@@ -450,8 +452,12 @@ function renderPlan() {
         <button type="button" class="switch" role="switch" id="deload" aria-checked="${!!state.deload}" aria-label="Semana de descarga"></button></div>
     </div>
 
+    ${typeof syncSection === 'function' ? syncSection() : ''}
+
     <h2 class="section-h">Respaldo</h2>
-    <p class="fine">Tus registros viven solo en este teléfono. Guarda un respaldo de vez en cuando por si cambias de celular o borras datos de Safari.</p>
+    <p class="fine">${typeof sync !== 'undefined' && sync.session
+      ? 'Tus registros se guardan en este teléfono y en tu cuenta. Si quieres, también puedes guardar una copia en archivo.'
+      : 'Tus registros viven solo en este teléfono. Guarda un respaldo de vez en cuando por si cambias de celular o borras datos de Safari.'}</p>
     <div class="backup">
       <button type="button" class="btn btn--ghost" id="export">Exportar</button>
       <button type="button" class="btn btn--ghost" id="import">Importar</button>

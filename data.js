@@ -117,6 +117,31 @@ const EXERCISES = {
       ],
     },
   },
+  apertura_inclinada: {
+    short: 'Aperturas inclinadas', g: ['pecho'],
+    name: 'Aperturas inclinadas con mancuernas', alt: 'banco a 30°', muscle: 'Pecho superior',
+    cue: 'Codos un poco doblados y fijos; baja en arco hasta sentir el estiramiento.',
+    how: {
+      setup: [
+        'Banco a unos 30°. Siéntate con las mancuernas apoyadas sobre los muslos.',
+        'Recuéstate y súbelas con ayuda de las rodillas hasta tenerlas arriba del pecho, palmas enfrentadas.',
+        'Omóplatos juntos y abajo, pies firmes y codos un poco doblados; ese ángulo no cambia en toda la serie.',
+      ],
+      move: [
+        'Abre los brazos en arco hacia los lados, como si abrazaras un barril.',
+        'Baja hasta que las mancuernas queden a la altura del pecho y sientas el estiramiento; no más abajo.',
+        'Regresa por el mismo arco apretando el pecho, hasta que las mancuernas queden a un palmo una de otra.',
+        'Al terminar, junta las mancuernas sobre el pecho y siéntate subiendo las rodillas; no las sueltes de lado.',
+      ],
+      tempo: '3 s bajando · 1 s abajo · 1–2 s subiendo',
+      feel: 'Parte alta del pecho, con un estiramiento fuerte abajo. No debe doler el frente del hombro.',
+      errors: [
+        ['Doblar y estirar los codos', 'El ángulo del codo no cambia; si cambia, se vuelve un press.'],
+        ['Bajar por debajo del pecho', 'Detente a la altura del pecho; más abajo carga el hombro.'],
+        ['Usar mucho peso', 'Peso moderado y bajada lenta; aquí manda el estiramiento, no la carga.'],
+      ],
+    },
+  },
   cruce_poleas: {
     g: ['pecho'],
     name: 'Cruce de poleas', alt: 'a la altura del pecho, con las dos poleas', muscle: 'Pecho',
@@ -684,6 +709,30 @@ const EXERCISES = {
       ],
     },
   },
+  spider_curl: {
+    short: 'Spider curl', g: ['biceps'],
+    name: 'Spider curl con mancuernas', alt: 'pecho apoyado en banco inclinado', muscle: 'Bíceps',
+    cue: 'Brazos colgando rectos; sube sin mover los codos y aprieta arriba.',
+    how: {
+      setup: [
+        'Banco a unos 45°. Párate detrás del respaldo y recárgate con el pecho sobre él.',
+        'La parte de arriba del pecho queda justo en el borde del respaldo; los pies firmes en el suelo.',
+        'Una mancuerna en cada mano, brazos colgando rectos hacia el suelo y palmas al frente.',
+      ],
+      move: [
+        'Sube las mancuernas doblando solo los codos; los brazos siguen apuntando al suelo.',
+        'Aprieta el bíceps un segundo arriba, con las mancuernas cerca de los hombros.',
+        'Baja despacio hasta estirar los brazos por completo.',
+      ],
+      tempo: '1 s subiendo · 1 s arriba · 2–3 s bajando',
+      feel: 'Frente del brazo, sobre todo arriba, cuando lo aprietas.',
+      errors: [
+        ['Despegar el pecho del banco', 'El pecho se queda apoyado; si necesitas impulso, baja el peso.'],
+        ['Echar los codos hacia atrás', 'Los codos se quedan quietos, apuntando al suelo.'],
+        ['Recortar la bajada', 'Estira por completo en cada repetición.'],
+      ],
+    },
+  },
   curl_predicador: {
     g: ['biceps'],
     name: 'Curl predicador', alt: 'barra Z o recta, en banco predicador', muscle: 'Bíceps',
@@ -860,7 +909,7 @@ const EXERCISES = {
   crunch_polea: {
     g: ['abdomen'],
     name: 'Crunch en polea alta', alt: 'con cuerda', muscle: 'Abdomen',
-    cue: 'Flexiona el tronco; no tires del cuello.',
+    cue: 'Pesado: si pasas de 12 reps, sube el peso. Flexiona el tronco; no tires del cuello.',
     how: {
       setup: [
         'Polea alta con cuerda.',
@@ -1000,7 +1049,7 @@ const DAYS = [
       { ex: 'press_hombro', sets: 4, reps: [6, 10], rest: '2–3 min', restSec: 150 },
       { ex: 'lat_polea', sets: 4, reps: [12, 15], perSide: true, rest: '60 s', restSec: 60, drop: true },
       { ex: 'pajaro_polea', sets: 3, reps: [15, 20], perSide: true, rest: '60 s', restSec: 60 },
-      { ex: 'curl_polea_z', sets: 3, reps: [8, 12], rest: '90 s', restSec: 90, isNew: true },
+      { ex: 'spider_curl', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90, drop: true, isNew: true },
       { ex: 'ext_triceps', sets: 3, reps: [10, 15], rest: '60–90 s', restSec: 75 },
       { ex: 'curl_inclinado', sets: 3, reps: [10, 12], rest: 'Sin descanso', restSec: 0, pair: true },
       { ex: 'fondos', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120, isNew: true },
@@ -1016,7 +1065,7 @@ const DAYS = [
       { ex: 'rdl_barra', sets: 3, reps: [8, 10], rest: '2 min', restSec: 120 },
       { ex: 'curl_femoral', sets: 2, reps: [10, 15], rest: '90 s', restSec: 90 },
       { ex: 'talones', sets: 2, reps: [12, 20], rest: '60 s', restSec: 60 },
-      { ex: 'crunch_polea', sets: 3, reps: [10, 15], rest: '60 s', restSec: 60 },
+      { ex: 'crunch_polea', sets: 3, reps: [8, 12], rest: '60 s', restSec: 60 },
       { ex: 'elev_piernas', sets: 3, reps: [10, 15], rest: '60 s', restSec: 60 },
       { ex: 'plancha', sets: 2, reps: [40, 60], unit: 's', rest: '60 s', restSec: 60 },
     ],
@@ -1028,7 +1077,7 @@ const DAYS = [
       { ex: 'press_inclinado', sets: 4, reps: [8, 12], rest: '2 min', restSec: 120, cue: 'Usa un peso controlable, sin rebotes.' },
       { ex: 'jalon_cerrado', sets: 4, reps: [8, 12], rest: '2 min', restSec: 120 },
       { ex: 'remo_sentado', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90 },
-      { ex: 'apertura_baja', sets: 3, reps: [12, 15], rest: '60–90 s', restSec: 75 },
+      { ex: 'apertura_inclinada', sets: 3, reps: [10, 15], rest: '60–90 s', restSec: 75, isNew: true },
       { ex: 'remo_polea_una', sets: 3, reps: [10, 12], perSide: true, rest: '90 s', restSec: 90 },
       { ex: 'face_pull', sets: 3, reps: [15, 20], rest: '60 s', restSec: 60 },
       { ex: 'elev_laterales', sets: 3, reps: [12, 20], rest: '60 s', restSec: 60, drop: true },
@@ -1043,7 +1092,7 @@ const DAYS = [
       { ex: 'ext_triceps', sets: 3, reps: [10, 15], rest: '60–90 s', restSec: 75 },
       { ex: 'curl_polea', sets: 3, reps: [10, 15], rest: 'Sin descanso', restSec: 0, pair: true, drop: true },
       { ex: 'triceps_barra', sets: 3, reps: [10, 15], rest: '90 s', restSec: 90, isNew: true },
-      { ex: 'crunch_polea', sets: 3, reps: [10, 15], rest: '60 s', restSec: 60 },
+      { ex: 'crunch_polea', sets: 3, reps: [8, 12], rest: '60 s', restSec: 60 },
       { ex: 'elev_piernas', sets: 3, reps: [10, 15], rest: '60 s', restSec: 60 },
     ],
     cardio: { ex: 'eliptica', text: '20 min moderados al terminar', short: 'Elíptica 20' },

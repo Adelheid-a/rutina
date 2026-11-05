@@ -324,6 +324,20 @@ const POSES = {
       (ph ? moveLine([118, 220], [156, 172]) + moveLine([282, 220], [244, 172]) + mark([184, 116]) + mark([216, 116]) : '');
   },
 
+  apertura_inclinada(ph, v) {
+    // de perfil: abajo los brazos casi rectos a los lados del banco; arriba, sobre el pecho
+    const hip = [176, 206];
+    const a = v({ a: 104, b: 84 }, { a: -64, b: -58 });
+    const { svg, J } = side({
+      hip, torso: -150, headA: -160, arm: a, farArm: a,
+      leg: { a: 15, b: 95 },
+      back: () => bench(hip, -150, 22),
+      item: (h) => dbEnd(h), farItem: (h) => dbEnd(h, true),
+    });
+    const chest = at(at(J.sh, 30, 14), -60, 13);
+    return svg + (ph ? moveArc(J.sh, 76, 112, -50) + mark(chest) : '');
+  },
+
   fondos(ph, v) {
     const hand = [214, 162];
     // abajo: hombros por delante de las manos y codos hacia atrás; arriba: brazos estirados
@@ -548,6 +562,31 @@ const POSES = {
     const el = J.arm[1];
     const bi = lerp(J.arm[0], J.arm[1], 0.55);
     return svg + (ph ? moveArc(el, 50, 84, -30) + mark([bi[0] + 7, bi[1]]) : '');
+  },
+
+  spider_curl(ph, v) {
+    // de pie, con el pecho sobre el respaldo inclinado y los brazos colgando al frente
+    const hip = [166, 172], t = -42;
+    const a = { a: 90, b: v(88, -48) };
+    const { svg, J } = side({
+      hip, torso: t, headA: -24,
+      arm: a, farArm: a, farShift: [-3, -2],
+      leg: { a: 96, b: 92 }, farLeg: { a: 88, b: 94 },
+      back: () => {
+        const o = at([0, 0], t + 90, 24);
+        const m = add(at(hip, t, 20), o), foot = [m[0], FLOOR - 4];
+        return bar(m, foot) + beam([foot[0] - 30, FLOOR - 3], [foot[0] + 30, FLOOR - 3], 6);
+      },
+      // respaldo sobre el pecho: va delante del torso y detrás del brazo cercano
+      mid: () => {
+        const o = at([0, 0], t + 90, 24);
+        return pad(add(at(hip, t, -4), o), add(at(hip, t, 50), o));
+      },
+      item: (h) => dbEnd(h), farItem: (h) => dbEnd(h, true),
+    });
+    const el = J.arm[1];
+    const bi = lerp(J.arm[0], J.arm[1], 0.55);
+    return svg + (ph ? moveArc(el, 50, 84, -40) + mark([bi[0] + 7, bi[1]]) : '');
   },
 
   prensa(ph, v) {

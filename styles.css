@@ -755,6 +755,35 @@ a.row:active .thumb { transform: scale(0.97); }
 }
 .switch[aria-checked="true"] { background: var(--ink); }
 .switch[aria-checked="true"]::after { background: var(--bg); transform: translateX(20px); }
+.sync-form { display: flex; gap: 10px; margin-top: 14px; }
+.sync-form input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  font: inherit;
+  font-size: 16px; /* 16px evita el zoom de iOS al enfocar */
+  color: var(--ink);
+  background: var(--plate-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0 14px;
+}
+.sync-form input:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
+.sync-form .btn { flex: none; }
+.btn:disabled, .sync-form input:disabled { opacity: 0.5; }
+.btn--sm { min-height: 40px; padding: 0 14px; font-size: 14px; flex: none; }
+.link-btn {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  min-height: 44px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--mute);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .backup { display: flex; gap: 10px; margin-top: 14px; }
 .backup .btn { flex: 1; }
 .fine { margin: 14px 0 0; color: var(--mute); font-size: 13px; max-width: 60ch; }
