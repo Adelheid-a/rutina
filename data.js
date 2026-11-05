@@ -167,6 +167,30 @@ const EXERCISES = {
       ],
     },
   },
+  press_cerrado: {
+    ill: 'press_plano', short: 'Press cerrado', g: ['triceps', 'pecho'],
+    name: 'Press cerrado con mancuernas', alt: 'palmas enfrentadas, mancuernas juntas', muscle: 'Tríceps · pecho',
+    cue: 'Mancuernas pegadas entre sí y codos cerca del cuerpo.',
+    how: {
+      setup: [
+        'Banco plano. Recuéstate con una mancuerna en cada mano sobre el pecho.',
+        'Palmas enfrentadas y las mancuernas tocándose a lo largo.',
+        'Omóplatos juntos y abajo, pies firmes en el suelo.',
+      ],
+      move: [
+        'Empuja hacia arriba sin separar las mancuernas hasta casi estirar los brazos.',
+        'Baja despacio hasta que toquen la parte baja del pecho, con los codos rozando el torso.',
+        'Aprieta las mancuernas entre sí durante toda la serie.',
+      ],
+      tempo: '2 s bajando · empuje firme',
+      feel: 'Parte de atrás del brazo y el centro del pecho.',
+      errors: [
+        ['Separar las mancuernas', 'Mantenlas juntas; si se abren, el trabajo se va al pecho.'],
+        ['Abrir los codos', 'Codos pegados al torso todo el recorrido.'],
+        ['Rebotar en el pecho', 'Toca suave y sube.'],
+      ],
+    },
+  },
   fondos: {
     short: 'Fondos',
     load: 'lastre', kind: 'c', g: ['pecho', 'triceps'],
@@ -1051,8 +1075,8 @@ const DAYS = [
       { ex: 'pajaro_polea', sets: 3, reps: [15, 20], perSide: true, rest: '60 s', restSec: 60 },
       { ex: 'spider_curl', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90, drop: true, isNew: true },
       { ex: 'ext_triceps', sets: 3, reps: [10, 15], rest: '60–90 s', restSec: 75 },
-      { ex: 'curl_inclinado', sets: 3, reps: [10, 12], rest: 'Sin descanso', restSec: 0, pair: true },
-      { ex: 'fondos', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120, isNew: true },
+      { ex: 'curl_inclinado', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90 },
+      { ex: 'press_cerrado', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120, isNew: true },
       { ex: 'curl_cuerda', sets: 2, reps: [10, 15], rest: '60 s', restSec: 60, drop: true },
     ],
     cardio: { ex: 'eliptica', text: '20 min moderados al terminar', short: 'Elíptica 20' },

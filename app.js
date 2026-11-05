@@ -525,6 +525,7 @@ screen.addEventListener('click', (e) => {
     const next = Math.max(0, base + Number(step.dataset.dir));
     input.value = String(next);
     storeSet(li, false);
+    if (step.dataset.step === 'r') autoDone(li);
     return;
   }
 
@@ -552,7 +553,11 @@ screen.addEventListener('click', (e) => {
 });
 
 screen.addEventListener('change', (e) => {
-  if (e.target.matches('.set input')) storeSet(e.target.closest('.set'), false);
+  if (e.target.matches('.set input')) {
+    const li = e.target.closest('.set');
+    storeSet(li, false);
+    if (e.target.name === 'r') autoDone(li);
+  }
   if (e.target.id === 'startDate' && e.target.value) {
     state.start = e.target.value > todayKey() ? todayKey() : e.target.value;
     save();
@@ -573,6 +578,13 @@ screen.addEventListener('click', (e) => {
   if (e.target.id === 'export') exportBackup();
   if (e.target.id === 'import') document.getElementById('importFile').click();
 });
+
+// escribir las reps cuenta como terminar la serie: se marca sola
+function autoDone(li) {
+  const chk = li.querySelector('[data-set]');
+  const rIn = li.querySelector('input[name="r"]');
+  if (chk && chk.getAttribute('aria-pressed') !== 'true' && num(rIn.value) > 0) chk.click();
+}
 
 function storeSet(li, setDone, value) {
   const d = Number(screen.dataset.d), i = Number(screen.dataset.i);
