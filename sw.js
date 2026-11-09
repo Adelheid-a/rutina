@@ -1,5 +1,5 @@
 // Guarda todos los archivos la primera vez para que la app abra sin internet.
-const CACHE = 'rutina-v14';
+const CACHE = 'rutina-v15';
 const FILES = [
   './', 'index.html', 'styles.css', 'app.js', 'data.js', 'illus.js', 'sync.js', 'manifest.webmanifest',
   'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png',

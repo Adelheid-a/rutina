@@ -167,6 +167,31 @@ const EXERCISES = {
       ],
     },
   },
+  cruce_alto: {
+    g: ['pecho'],
+    name: 'Cruce de poleas de arriba hacia abajo', alt: 'con las dos poleas arriba', muscle: 'Pecho medio y bajo',
+    cue: 'Codos fijos y algo flexionados; baja las manos en arco hasta juntarlas frente a la cadera.',
+    how: {
+      setup: [
+        'Las dos poleas del cruce arriba, con agarre de mano.',
+        'Toma un agarre en cada mano y da un paso al frente, al centro, con un pie adelante.',
+        'Inclina el torso un poco al frente, pecho arriba, y abre los brazos arriba y a los lados con los codos un poco flexionados.',
+      ],
+      move: [
+        'Empieza con los brazos abiertos, sintiendo el estiramiento del pecho.',
+        'Baja las dos manos en arco, hacia abajo y al centro, hasta juntarlas frente a la cadera.',
+        'Aprieta el pecho un segundo con las manos juntas.',
+        'Sube despacio por el mismo arco hasta volver al estiramiento.',
+      ],
+      tempo: '1 s bajando · 1 s pausa · 2 s subiendo',
+      feel: 'Parte media y baja del pecho.',
+      errors: [
+        ['Doblar y estirar los codos', 'Los brazos son un arco fijo; si cambian, se vuelve un press.'],
+        ['Jalar con los hombros hacia las orejas', 'Hombros abajo y atrás todo el tiempo.'],
+        ['Subir de golpe', 'La vuelta dura el doble que la ida.'],
+      ],
+    },
+  },
   press_cerrado: {
     ill: 'press_plano', short: 'Press cerrado', g: ['triceps', 'pecho'],
     name: 'Press cerrado con mancuernas', alt: 'palmas enfrentadas, mancuernas juntas', muscle: 'Tríceps · pecho',
@@ -1061,7 +1086,7 @@ const DAYS = [
       { ex: 'remo_ancho', sets: 4, reps: [8, 12], rest: '2 min', restSec: 120, isNew: true },
       { ex: 'press_plano', sets: 3, reps: [8, 10], rest: '2 min', restSec: 120 },
       { ex: 'jalon', sets: 4, reps: [8, 12], rest: '2 min', restSec: 120 },
-      { ex: 'cruce_poleas', sets: 3, reps: [12, 15], rest: '60–90 s', restSec: 75 },
+      { ex: 'cruce_alto', sets: 3, reps: [12, 15], rest: '60–90 s', restSec: 75, isNew: true },
       { ex: 'pullover_polea', sets: 2, reps: [12, 15], rest: '60–90 s', restSec: 75 },
       { ex: 'elev_laterales', sets: 3, reps: [12, 20], rest: '60 s', restSec: 60, drop: true },
     ],

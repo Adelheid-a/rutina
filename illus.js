@@ -400,6 +400,18 @@ const POSES = {
       (ph ? moveArc([200, 60], 96, 152, 112) + moveArc([200, 60], 96, 28, 68) + mark([184, 120]) + mark([216, 120]) : '');
   },
 
+  cruce_alto(ph, v) {
+    // cruce de poleas de arriba hacia abajo: las manos bajan en arco y se juntan frente a la cadera
+    const { svg, J } = front({
+      shY: 104, hipY: 168,
+      arm: { to: v([112, 90], [192, 168]), bend: 1 }, leg: { a: 94, b: 90 },
+      back: () => tower(78, 30, -1) + tower(322, 30, 1),
+    });
+    const h = J.armL[2], h2 = J.armR[2];
+    return pulley([90, 44]) + pulley([310, 44]) + cable(h, [92, 48]) + cable(h2, [308, 48]) + svg + grip(h) + grip(h2) +
+      (ph ? moveArc([175, 108], 80, 196, 106) + moveArc([225, 108], 80, -16, 74) + mark([186, 128]) + mark([214, 128]) : '');
+  },
+
   jalon(ph, v) {
     const { svg, J } = side({
       hip: [186, 214], torso: -100, headA: v(-92, -96),
