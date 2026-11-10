@@ -576,8 +576,10 @@ const POSES = {
     return svg + (ph ? moveArc(el, 50, 84, -30) + mark([bi[0] + 7, bi[1]]) : '');
   },
 
-  spider_curl(ph, v) {
-    // de pie, con el pecho sobre el respaldo inclinado y los brazos colgando al frente
+  spider_curl_z(ph, v) { return POSES.spider_curl(ph, v, true); },
+
+  spider_curl(ph, v, z) {
+    // de pie, con el pecho sobre el respaldo inclinado y los brazos colgando al frente; z = barra Z vista de punta
     const hip = [166, 172], t = -42;
     const a = { a: 90, b: v(88, -48) };
     const { svg, J } = side({
@@ -594,7 +596,7 @@ const POSES = {
         const o = at([0, 0], t + 90, 24);
         return pad(add(at(hip, t, -4), o), add(at(hip, t, 50), o));
       },
-      item: (h) => dbEnd(h), farItem: (h) => dbEnd(h, true),
+      item: (h) => (z ? bbEnd(h) : dbEnd(h)), farItem: z ? null : (h) => dbEnd(h, true),
     });
     const el = J.arm[1];
     const bi = lerp(J.arm[0], J.arm[1], 0.55);

@@ -782,6 +782,30 @@ const EXERCISES = {
       ],
     },
   },
+  spider_curl_z: {
+    short: 'Spider curl Z', g: ['biceps'],
+    name: 'Spider curl con barra Z', alt: 'pecho apoyado en banco inclinado', muscle: 'Bíceps',
+    cue: 'Brazos colgando rectos; sube la barra sin mover los codos y aprieta arriba.',
+    how: {
+      setup: [
+        'Banco a unos 45°. Párate detrás del respaldo y recárgate con el pecho sobre él.',
+        'La parte de arriba del pecho queda justo en el borde del respaldo; los pies firmes en el suelo.',
+        'Toma la barra Z por la parte inclinada, al ancho de los hombros, con los brazos colgando rectos hacia el suelo.',
+      ],
+      move: [
+        'Sube la barra doblando solo los codos; los brazos siguen apuntando al suelo.',
+        'Aprieta el bíceps un segundo arriba, con la barra cerca de la cara.',
+        'Baja despacio hasta estirar los brazos por completo.',
+      ],
+      tempo: '1 s subiendo · 1 s arriba · 2–3 s bajando',
+      feel: 'Frente del brazo, sobre todo arriba, cuando lo aprietas.',
+      errors: [
+        ['Despegar el pecho del banco', 'El pecho se queda apoyado; si necesitas impulso, baja el peso.'],
+        ['Echar los codos hacia atrás', 'Los codos se quedan quietos, apuntando al suelo.'],
+        ['Recortar la bajada', 'Estira por completo en cada repetición.'],
+      ],
+    },
+  },
   curl_predicador: {
     g: ['biceps'],
     name: 'Curl predicador', alt: 'barra Z o recta, en banco predicador', muscle: 'Bíceps',
@@ -1098,7 +1122,7 @@ const DAYS = [
       { ex: 'press_hombro', sets: 4, reps: [6, 10], rest: '2–3 min', restSec: 150 },
       { ex: 'lat_polea', sets: 4, reps: [12, 15], perSide: true, rest: '60 s', restSec: 60, drop: true },
       { ex: 'pajaro_polea', sets: 3, reps: [15, 20], perSide: true, rest: '60 s', restSec: 60 },
-      { ex: 'spider_curl', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90, drop: true, isNew: true },
+      { ex: 'spider_curl_z', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90, drop: true, isNew: true, cue: 'El peso que anotas es solo de los discos, sin la barra. Empieza con unos 5 kg por lado.' },
       { ex: 'ext_triceps', sets: 3, reps: [10, 15], rest: '60–90 s', restSec: 75 },
       { ex: 'curl_inclinado', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90 },
       { ex: 'triceps_barra', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90, cue: 'Hoy el tríceps llega cansado: empieza con un poco menos de peso que el viernes.' },
