@@ -1101,7 +1101,7 @@ const DAYS = [
       { ex: 'spider_curl', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90, drop: true, isNew: true },
       { ex: 'ext_triceps', sets: 3, reps: [10, 15], rest: '60–90 s', restSec: 75 },
       { ex: 'curl_inclinado', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90 },
-      { ex: 'press_cerrado', sets: 3, reps: [8, 12], rest: '2 min', restSec: 120, isNew: true },
+      { ex: 'triceps_barra', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90, cue: 'Hoy el tríceps llega cansado: empieza con un poco menos de peso que el viernes.' },
       { ex: 'curl_cuerda', sets: 2, reps: [10, 15], rest: '60 s', restSec: 60, drop: true },
     ],
     cardio: { ex: 'eliptica', text: '20 min moderados al terminar', short: 'Elíptica 20' },
