@@ -684,6 +684,30 @@ const EXERCISES = {
       ],
     },
   },
+  curl_z: {
+    ill: 'curl_barra', short: 'Curl barra Z', g: ['biceps'],
+    name: 'Curl de pie con barra Z', alt: 'agarre en la parte inclinada', muscle: 'Bíceps',
+    cue: 'Codos pegados al cuerpo; sube sin balancear el torso.',
+    how: {
+      setup: [
+        'De pie, pies al ancho de la cadera y rodillas un poco flexionadas.',
+        'Toma la barra Z por la parte inclinada, al ancho de los hombros, con las palmas hacia el frente.',
+        'Brazos estirados, codos pegados a los costados, pecho arriba y abdomen firme.',
+      ],
+      move: [
+        'Sube la barra doblando solo los codos, sin que se adelanten.',
+        'Aprieta el bíceps un segundo arriba, con la barra a la altura del pecho.',
+        'Baja despacio hasta estirar los brazos por completo.',
+      ],
+      tempo: '1 s subiendo · 1 s arriba · 2–3 s bajando',
+      feel: 'Frente del brazo.',
+      errors: [
+        ['Balancear el torso para subir', 'Si necesitas impulso, baja el peso.'],
+        ['Adelantar los codos arriba', 'Los codos se quedan pegados a los costados.'],
+        ['Recortar la bajada', 'Estira por completo en cada repetición.'],
+      ],
+    },
+  },
   curl_polea_z: {
     ill: 'curl_polea', short: 'Curl con barra Z', g: ['biceps'],
     name: 'Curl en polea baja con barra Z', alt: 'agarre inclinado, más cómodo para la muñeca', muscle: 'Bíceps',
@@ -1122,7 +1146,7 @@ const DAYS = [
       { ex: 'press_hombro', sets: 4, reps: [6, 10], rest: '2–3 min', restSec: 150 },
       { ex: 'lat_polea', sets: 4, reps: [12, 15], perSide: true, rest: '60 s', restSec: 60, drop: true },
       { ex: 'pajaro_polea', sets: 3, reps: [15, 20], perSide: true, rest: '60 s', restSec: 60 },
-      { ex: 'spider_curl_z', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90, drop: true, isNew: true, cue: 'El peso que anotas es solo de los discos, sin la barra. Empieza con unos 5 kg por lado.' },
+      { ex: 'curl_z', sets: 3, reps: [8, 12], rest: '90 s', restSec: 90, drop: true, isNew: true, cue: 'El peso que anotas es solo de los discos, sin la barra.' },
       { ex: 'ext_triceps', sets: 3, reps: [10, 15], rest: '60–90 s', restSec: 75 },
       { ex: 'curl_inclinado', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90 },
       { ex: 'triceps_barra', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90, cue: 'Hoy el tríceps llega cansado: empieza con un poco menos de peso que el viernes.' },
@@ -1135,8 +1159,7 @@ const DAYS = [
     items: [
       { ex: 'prensa', sets: 4, reps: [8, 12], rest: '2 min', restSec: 120 },
       { ex: 'hip_thrust', sets: 3, reps: [10, 12], rest: '90 s', restSec: 90, isNew: true },
-      { ex: 'rdl_barra', sets: 3, reps: [8, 10], rest: '2 min', restSec: 120 },
-      { ex: 'curl_femoral', sets: 2, reps: [10, 15], rest: '90 s', restSec: 90 },
+      { ex: 'curl_femoral', sets: 4, reps: [10, 15], rest: '90 s', restSec: 90 },
       { ex: 'talones', sets: 2, reps: [12, 20], rest: '60 s', restSec: 60 },
       { ex: 'crunch_polea', sets: 3, reps: [8, 12], rest: '60 s', restSec: 60 },
       { ex: 'elev_piernas', sets: 3, reps: [10, 15], rest: '60 s', restSec: 60 },
